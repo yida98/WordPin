@@ -13,6 +13,8 @@
 		E4F593BC2A58BC25007EFA8C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4F593BB2A58BC25007EFA8C /* Preview Assets.xcassets */; };
 		E4F593BE2A58BC25007EFA8C /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F593BD2A58BC25007EFA8C /* Persistence.swift */; };
 		E4F593C12A58BC25007EFA8C /* WordPin.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E4F593BF2A58BC25007EFA8C /* WordPin.xcdatamodeld */; };
+		E4F593CA2A58BCCE007EFA8C /* WordCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F593C92A58BCCE007EFA8C /* WordCollectionView.swift */; };
+		E4F593CC2A5DF65C007EFA8C /* URLTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F593CB2A5DF65C007EFA8C /* URLTask.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		E4F593BD2A58BC25007EFA8C /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		E4F593C02A58BC25007EFA8C /* WordPin.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WordPin.xcdatamodel; sourceTree = "<group>"; };
 		E4F593C22A58BC25007EFA8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E4F593C92A58BCCE007EFA8C /* WordCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCollectionView.swift; sourceTree = "<group>"; };
+		E4F593CB2A5DF65C007EFA8C /* URLTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = URLTask.swift; path = WordPin/Communication/URLTask.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +61,8 @@
 			isa = PBXGroup;
 			children = (
 				E4F593B42A58BC24007EFA8C /* WordPinApp.swift */,
-				E4F593B62A58BC24007EFA8C /* ContentView.swift */,
+				E4F593C82A58BCB1007EFA8C /* View */,
+				E4F593CD2A5DF6D3007EFA8C /* Communication */,
 				E4F593B82A58BC25007EFA8C /* Assets.xcassets */,
 				E4F593BD2A58BC25007EFA8C /* Persistence.swift */,
 				E4F593C22A58BC25007EFA8C /* Info.plist */,
@@ -73,6 +78,23 @@
 				E4F593BB2A58BC25007EFA8C /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		E4F593C82A58BCB1007EFA8C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E4F593B62A58BC24007EFA8C /* ContentView.swift */,
+				E4F593C92A58BCCE007EFA8C /* WordCollectionView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E4F593CD2A5DF6D3007EFA8C /* Communication */ = {
+			isa = PBXGroup;
+			children = (
+				E4F593CB2A5DF65C007EFA8C /* URLTask.swift */,
+			);
+			path = Communication;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -146,8 +168,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4F593BE2A58BC25007EFA8C /* Persistence.swift in Sources */,
+				E4F593CA2A58BCCE007EFA8C /* WordCollectionView.swift in Sources */,
 				E4F593B72A58BC24007EFA8C /* ContentView.swift in Sources */,
 				E4F593B52A58BC24007EFA8C /* WordPinApp.swift in Sources */,
+				E4F593CC2A5DF65C007EFA8C /* URLTask.swift in Sources */,
 				E4F593C12A58BC25007EFA8C /* WordPin.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
