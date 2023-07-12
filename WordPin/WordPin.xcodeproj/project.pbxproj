@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E4F2AE052A5F49430039DCAA /* Submission.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F2AE042A5F49430039DCAA /* Submission.swift */; };
 		E4F2AE092A5F58C70039DCAA /* APIs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F2AE082A5F58C70039DCAA /* APIs.swift */; };
+		E4F2AE0B2A5F65070039DCAA /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F2AE0A2A5F65070039DCAA /* Reachability.swift */; };
 		E4F593B52A58BC24007EFA8C /* WordPinApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F593B42A58BC24007EFA8C /* WordPinApp.swift */; };
 		E4F593B72A58BC24007EFA8C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F593B62A58BC24007EFA8C /* ContentView.swift */; };
 		E4F593B92A58BC25007EFA8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4F593B82A58BC25007EFA8C /* Assets.xcassets */; };
@@ -23,6 +24,7 @@
 /* Begin PBXFileReference section */
 		E4F2AE042A5F49430039DCAA /* Submission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submission.swift; sourceTree = "<group>"; };
 		E4F2AE082A5F58C70039DCAA /* APIs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIs.swift; sourceTree = "<group>"; };
+		E4F2AE0A2A5F65070039DCAA /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		E4F593B12A58BC24007EFA8C /* WordPin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WordPin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4F593B42A58BC24007EFA8C /* WordPinApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPinApp.swift; sourceTree = "<group>"; };
 		E4F593B62A58BC24007EFA8C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				E4F593CB2A5DF65C007EFA8C /* URLTask.swift */,
+				E4F2AE0A2A5F65070039DCAA /* Reachability.swift */,
 				E4F2AE082A5F58C70039DCAA /* APIs.swift */,
 				E4F593BD2A58BC25007EFA8C /* Persistence.swift */,
 			);
@@ -192,6 +195,7 @@
 				E4F593CC2A5DF65C007EFA8C /* URLTask.swift in Sources */,
 				E4F593C12A58BC25007EFA8C /* WordPin.xcdatamodeld in Sources */,
 				E4F2AE092A5F58C70039DCAA /* APIs.swift in Sources */,
+				E4F2AE0B2A5F65070039DCAA /* Reachability.swift in Sources */,
 				E4F2AE052A5F49430039DCAA /* Submission.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
