@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E4F2AE052A5F49430039DCAA /* Submission.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F2AE042A5F49430039DCAA /* Submission.swift */; };
 		E4F593B52A58BC24007EFA8C /* WordPinApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F593B42A58BC24007EFA8C /* WordPinApp.swift */; };
 		E4F593B72A58BC24007EFA8C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F593B62A58BC24007EFA8C /* ContentView.swift */; };
 		E4F593B92A58BC25007EFA8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4F593B82A58BC25007EFA8C /* Assets.xcassets */; };
@@ -15,9 +16,11 @@
 		E4F593C12A58BC25007EFA8C /* WordPin.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E4F593BF2A58BC25007EFA8C /* WordPin.xcdatamodeld */; };
 		E4F593CA2A58BCCE007EFA8C /* WordCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F593C92A58BCCE007EFA8C /* WordCollectionView.swift */; };
 		E4F593CC2A5DF65C007EFA8C /* URLTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F593CB2A5DF65C007EFA8C /* URLTask.swift */; };
+		E4F593CF2A5F3C0B007EFA8C /* Submission_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F593CE2A5F3C0B007EFA8C /* Submission_ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E4F2AE042A5F49430039DCAA /* Submission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submission.swift; sourceTree = "<group>"; };
 		E4F593B12A58BC24007EFA8C /* WordPin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WordPin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4F593B42A58BC24007EFA8C /* WordPinApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPinApp.swift; sourceTree = "<group>"; };
 		E4F593B62A58BC24007EFA8C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -28,6 +31,7 @@
 		E4F593C22A58BC25007EFA8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E4F593C92A58BCCE007EFA8C /* WordCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCollectionView.swift; sourceTree = "<group>"; };
 		E4F593CB2A5DF65C007EFA8C /* URLTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = URLTask.swift; path = WordPin/Communication/URLTask.swift; sourceTree = SOURCE_ROOT; };
+		E4F593CE2A5F3C0B007EFA8C /* Submission_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submission_ext.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,10 +65,10 @@
 			isa = PBXGroup;
 			children = (
 				E4F593B42A58BC24007EFA8C /* WordPinApp.swift */,
+				E4F593D02A5F3C10007EFA8C /* Model */,
 				E4F593C82A58BCB1007EFA8C /* View */,
 				E4F593CD2A5DF6D3007EFA8C /* Communication */,
 				E4F593B82A58BC25007EFA8C /* Assets.xcassets */,
-				E4F593BD2A58BC25007EFA8C /* Persistence.swift */,
 				E4F593C22A58BC25007EFA8C /* Info.plist */,
 				E4F593BF2A58BC25007EFA8C /* WordPin.xcdatamodeld */,
 				E4F593BA2A58BC25007EFA8C /* Preview Content */,
@@ -93,8 +97,18 @@
 			isa = PBXGroup;
 			children = (
 				E4F593CB2A5DF65C007EFA8C /* URLTask.swift */,
+				E4F593BD2A58BC25007EFA8C /* Persistence.swift */,
 			);
 			path = Communication;
+			sourceTree = "<group>";
+		};
+		E4F593D02A5F3C10007EFA8C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E4F593CE2A5F3C0B007EFA8C /* Submission_ext.swift */,
+				E4F2AE042A5F49430039DCAA /* Submission.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -169,10 +183,12 @@
 			files = (
 				E4F593BE2A58BC25007EFA8C /* Persistence.swift in Sources */,
 				E4F593CA2A58BCCE007EFA8C /* WordCollectionView.swift in Sources */,
+				E4F593CF2A5F3C0B007EFA8C /* Submission_ext.swift in Sources */,
 				E4F593B72A58BC24007EFA8C /* ContentView.swift in Sources */,
 				E4F593B52A58BC24007EFA8C /* WordPinApp.swift in Sources */,
 				E4F593CC2A5DF65C007EFA8C /* URLTask.swift in Sources */,
 				E4F593C12A58BC25007EFA8C /* WordPin.xcdatamodeld in Sources */,
+				E4F2AE052A5F49430039DCAA /* Submission.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +314,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"WordPin/Preview Content\"";
@@ -316,6 +333,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = carrism.WordPin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -327,6 +345,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"WordPin/Preview Content\"";
@@ -345,6 +364,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = carrism.WordPin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
