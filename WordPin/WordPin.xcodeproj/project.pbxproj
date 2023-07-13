@@ -32,6 +32,7 @@
 		E4F2AE3D2A5FD3C60039DCAA /* DigitalNumbers-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4F2AE3C2A5FD3C60039DCAA /* DigitalNumbers-Regular.ttf */; };
 		E4F2AE412A5FD48E0039DCAA /* VT323-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4F2AE3F2A5FD48E0039DCAA /* VT323-Regular.ttf */; };
 		E4F2AE422A5FD48E0039DCAA /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = E4F2AE402A5FD48E0039DCAA /* OFL.txt */; };
+		E4F2AE442A5FD8340039DCAA /* Color_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F2AE432A5FD8340039DCAA /* Color_ext.swift */; };
 		E4F593B52A58BC24007EFA8C /* WordPinApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F593B42A58BC24007EFA8C /* WordPinApp.swift */; };
 		E4F593B72A58BC24007EFA8C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F593B62A58BC24007EFA8C /* ContentView.swift */; };
 		E4F593B92A58BC25007EFA8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4F593B82A58BC25007EFA8C /* Assets.xcassets */; };
@@ -69,6 +70,7 @@
 		E4F2AE3C2A5FD3C60039DCAA /* DigitalNumbers-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DigitalNumbers-Regular.ttf"; sourceTree = "<group>"; };
 		E4F2AE3F2A5FD48E0039DCAA /* VT323-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VT323-Regular.ttf"; sourceTree = "<group>"; };
 		E4F2AE402A5FD48E0039DCAA /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
+		E4F2AE432A5FD8340039DCAA /* Color_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color_ext.swift; sourceTree = "<group>"; };
 		E4F593B12A58BC24007EFA8C /* WordPin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WordPin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4F593B42A58BC24007EFA8C /* WordPinApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPinApp.swift; sourceTree = "<group>"; };
 		E4F593B62A58BC24007EFA8C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				E4F2AE0E2A5FC2B10039DCAA /* Font_ext.swift */,
+				E4F2AE432A5FD8340039DCAA /* Color_ext.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -328,6 +331,7 @@
 				E4F593B52A58BC24007EFA8C /* WordPinApp.swift in Sources */,
 				E4F593CC2A5DF65C007EFA8C /* URLTask.swift in Sources */,
 				E4F593C12A58BC25007EFA8C /* WordPin.xcdatamodeld in Sources */,
+				E4F2AE442A5FD8340039DCAA /* Color_ext.swift in Sources */,
 				E4F2AE092A5F58C70039DCAA /* APIs.swift in Sources */,
 				E4F2AE0F2A5FC2B10039DCAA /* Font_ext.swift in Sources */,
 				E4F2AE0D2A5FBFE60039DCAA /* MainScreenList.swift in Sources */,
