@@ -90,7 +90,7 @@ struct TitleText: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(.primary(size: size, emphasis: .medium))
-            .foregroundColor(.primaryFont)
+            .foregroundColor(.screenFont)
             .shadow(color: .black.opacity(0.5), radius: 0.5, x: -0.5, y: -0.5)
             .shadow(color: .white.opacity(0.5), radius: 1, x: 1, y: 1)
     }

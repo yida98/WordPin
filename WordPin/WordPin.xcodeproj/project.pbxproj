@@ -35,6 +35,8 @@
 		E4F2AE4A2A60A5D90039DCAA /* SubmissionsTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F2AE492A60A5D90039DCAA /* SubmissionsTable.swift */; };
 		E4F2AE4C2A60AB1E0039DCAA /* LightIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F2AE4B2A60AB1E0039DCAA /* LightIndicator.swift */; };
 		E4F2AE4E2A60BEA50039DCAA /* GameButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F2AE4D2A60BEA50039DCAA /* GameButton.swift */; };
+		E4F2AE502A60FF5B0039DCAA /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F2AE4F2A60FF5B0039DCAA /* GameView.swift */; };
+		E4F2AE532A6107350039DCAA /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F2AE522A6107350039DCAA /* Constant.swift */; };
 		E4F593B52A58BC24007EFA8C /* WordPinApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F593B42A58BC24007EFA8C /* WordPinApp.swift */; };
 		E4F593B72A58BC24007EFA8C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F593B62A58BC24007EFA8C /* ContentView.swift */; };
 		E4F593B92A58BC25007EFA8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4F593B82A58BC25007EFA8C /* Assets.xcassets */; };
@@ -75,6 +77,8 @@
 		E4F2AE492A60A5D90039DCAA /* SubmissionsTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmissionsTable.swift; sourceTree = "<group>"; };
 		E4F2AE4B2A60AB1E0039DCAA /* LightIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightIndicator.swift; sourceTree = "<group>"; };
 		E4F2AE4D2A60BEA50039DCAA /* GameButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameButton.swift; sourceTree = "<group>"; };
+		E4F2AE4F2A60FF5B0039DCAA /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		E4F2AE522A6107350039DCAA /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Constant.swift; path = "Primitive extensions/Constant.swift"; sourceTree = "<group>"; };
 		E4F593B12A58BC24007EFA8C /* WordPin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WordPin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4F593B42A58BC24007EFA8C /* WordPinApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPinApp.swift; sourceTree = "<group>"; };
 		E4F593B62A58BC24007EFA8C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -105,6 +109,7 @@
 				E4F2AE482A60A2E40039DCAA /* Primitive extensions */,
 				E4F2AE462A60A2D30039DCAA /* NeumorphicScreen.swift */,
 				E4F2AE4B2A60AB1E0039DCAA /* LightIndicator.swift */,
+				E4F2AE522A6107350039DCAA /* Constant.swift */,
 				E4F2AE4D2A60BEA50039DCAA /* GameButton.swift */,
 			);
 			path = Helper;
@@ -177,6 +182,14 @@
 			path = "Primitive extensions";
 			sourceTree = "<group>";
 		};
+		E4F2AE512A60FF5F0039DCAA /* game view */ = {
+			isa = PBXGroup;
+			children = (
+				E4F2AE4F2A60FF5B0039DCAA /* GameView.swift */,
+			);
+			path = "game view";
+			sourceTree = "<group>";
+		};
 		E4F593A82A58BC24007EFA8C = {
 			isa = PBXGroup;
 			children = (
@@ -222,6 +235,7 @@
 				E4F593B62A58BC24007EFA8C /* ContentView.swift */,
 				E4F593C92A58BCCE007EFA8C /* WordCollectionView.swift */,
 				E4F2AE492A60A5D90039DCAA /* SubmissionsTable.swift */,
+				E4F2AE512A60FF5F0039DCAA /* game view */,
 				E4F2AE0C2A5FBFE60039DCAA /* MainScreenList.swift */,
 				E4F2AE102A5FC2C00039DCAA /* Helper */,
 			);
@@ -340,9 +354,11 @@
 				E4F593BE2A58BC25007EFA8C /* Persistence.swift in Sources */,
 				E4F593CA2A58BCCE007EFA8C /* WordCollectionView.swift in Sources */,
 				E4F593CF2A5F3C0B007EFA8C /* Submission_ext.swift in Sources */,
+				E4F2AE502A60FF5B0039DCAA /* GameView.swift in Sources */,
 				E4F593B72A58BC24007EFA8C /* ContentView.swift in Sources */,
 				E4F2AE4C2A60AB1E0039DCAA /* LightIndicator.swift in Sources */,
 				E4F593B52A58BC24007EFA8C /* WordPinApp.swift in Sources */,
+				E4F2AE532A6107350039DCAA /* Constant.swift in Sources */,
 				E4F593CC2A5DF65C007EFA8C /* URLTask.swift in Sources */,
 				E4F593C12A58BC25007EFA8C /* WordPin.xcdatamodeld in Sources */,
 				E4F2AE442A5FD8340039DCAA /* Color_ext.swift in Sources */,

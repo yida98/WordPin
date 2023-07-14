@@ -17,6 +17,7 @@ extension Color {
     
     // MARK: - LCD Display
     static let screenBackground: Color = Color("screenBackground")
+    static let screenFont: Color = Color("screenFont")
     static let primaryFont: Color = Color("primaryFont")
     static let secondaryFont: Color = Color("secondaryFont")
     static let tertiaryFont: Color = Color("tertiaryFont")
