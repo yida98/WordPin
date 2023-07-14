@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct WordCollectionView: View {
+    @ObservedObject var viewModel: WordCollectionViewModel
     
     private let scoreWidth: CGFloat = 50
     
@@ -62,19 +63,27 @@ struct WordCollectionView: View {
             
             HStack {
                 Spacer()
-                GameButton()
+                GameButton {
+                    viewModel.playNewGame()
+                }
             }
             .padding(.trailing, 20)
             .scenePadding(.minimum, edges: .horizontal)
             .scenePadding(.minimum, edges: .bottom)
         }
         .background(Color.background)
+        .sheet(isPresented: $viewModel.isPresentingGame) {
+            // TODO: On dismiss
+        } content: {
+            GameView(word: "lmao")
+        }
+
     }
 }
 
 struct WordCollectionView_Previews: PreviewProvider {
     static var previews: some View {
-        WordCollectionView()
+        WordCollectionView(viewModel: WordCollectionViewModel())
     }
 }
 

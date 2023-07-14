@@ -14,7 +14,7 @@ struct WordPinApp: App {
 
     var body: some Scene {
         WindowGroup {
-            WordCollectionView()
+            WordCollectionView(viewModel: WordCollectionViewModel())
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .environmentObject(networkMonitor)
         }

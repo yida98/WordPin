@@ -8,9 +8,15 @@
 import SwiftUI
 
 struct GameButton: View {
+    let action: () -> Void
+    
+    init(action: @escaping () -> Void) {
+        self.action = action
+    }
+    
     var body: some View {
         Button {
-            debugPrint("lol")
+            action()
         } label: {
             Text("P L A Y")
                 .font(.primary(size: .caption1, emphasis: .bold))
@@ -22,7 +28,7 @@ struct GameButton: View {
 
 struct GameButton_Previews: PreviewProvider {
     static var previews: some View {
-        GameButton()
+        GameButton(action: {  })
     }
 }
 
