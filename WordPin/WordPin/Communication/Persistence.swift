@@ -59,8 +59,9 @@ class PersistenceController: ObservableObject {
         return NSEntityDescription.entity(forEntityName: EntityName.submission.rawValue, in: managedContext)
     }()
     
-    enum EntityName: String {
-        case submission
+    enum EntityName: String, CaseIterable {
+        typealias RawValue = String
+        case submission = "Submission"
     }
     
     func fetchAll() -> [NSManagedObject]? {

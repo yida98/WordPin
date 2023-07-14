@@ -8,6 +8,7 @@
 import Foundation
 import CoreData
 
+@objc(Submission)
 class Submission: NSManagedObject, Codable {
     enum CodingKeys: String, CodingKey {
         case id, word, group, timestamp

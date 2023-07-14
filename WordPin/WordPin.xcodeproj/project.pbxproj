@@ -16,7 +16,6 @@
 		E4F2AE232A5FC3F10039DCAA /* IBMPlexSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4F2AE142A5FC3F10039DCAA /* IBMPlexSans-Medium.ttf */; };
 		E4F2AE242A5FC3F10039DCAA /* IBMPlexSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4F2AE152A5FC3F10039DCAA /* IBMPlexSans-SemiBold.ttf */; };
 		E4F2AE252A5FC3F10039DCAA /* IBMPlexSans-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4F2AE162A5FC3F10039DCAA /* IBMPlexSans-MediumItalic.ttf */; };
-		E4F2AE262A5FC3F10039DCAA /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = E4F2AE172A5FC3F10039DCAA /* OFL.txt */; };
 		E4F2AE272A5FC3F10039DCAA /* IBMPlexSans-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4F2AE182A5FC3F10039DCAA /* IBMPlexSans-LightItalic.ttf */; };
 		E4F2AE282A5FC3F10039DCAA /* IBMPlexSans-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4F2AE192A5FC3F10039DCAA /* IBMPlexSans-ExtraLight.ttf */; };
 		E4F2AE292A5FC3F10039DCAA /* IBMPlexSans-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4F2AE1A2A5FC3F10039DCAA /* IBMPlexSans-Thin.ttf */; };
@@ -28,11 +27,14 @@
 		E4F2AE2F2A5FC3F10039DCAA /* IBMPlexSans-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4F2AE202A5FC3F10039DCAA /* IBMPlexSans-ExtraLightItalic.ttf */; };
 		E4F2AE302A5FC3F10039DCAA /* IBMPlexSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4F2AE212A5FC3F10039DCAA /* IBMPlexSans-Bold.ttf */; };
 		E4F2AE392A5FD3B40039DCAA /* PublicPixel-z84yD.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4F2AE372A5FD3B40039DCAA /* PublicPixel-z84yD.ttf */; };
-		E4F2AE3A2A5FD3B40039DCAA /* info.txt in Resources */ = {isa = PBXBuildFile; fileRef = E4F2AE382A5FD3B40039DCAA /* info.txt */; };
 		E4F2AE3D2A5FD3C60039DCAA /* DigitalNumbers-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4F2AE3C2A5FD3C60039DCAA /* DigitalNumbers-Regular.ttf */; };
 		E4F2AE412A5FD48E0039DCAA /* VT323-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4F2AE3F2A5FD48E0039DCAA /* VT323-Regular.ttf */; };
 		E4F2AE422A5FD48E0039DCAA /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = E4F2AE402A5FD48E0039DCAA /* OFL.txt */; };
 		E4F2AE442A5FD8340039DCAA /* Color_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F2AE432A5FD8340039DCAA /* Color_ext.swift */; };
+		E4F2AE472A60A2D30039DCAA /* NeumorphicScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F2AE462A60A2D30039DCAA /* NeumorphicScreen.swift */; };
+		E4F2AE4A2A60A5D90039DCAA /* SubmissionsTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F2AE492A60A5D90039DCAA /* SubmissionsTable.swift */; };
+		E4F2AE4C2A60AB1E0039DCAA /* LightIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F2AE4B2A60AB1E0039DCAA /* LightIndicator.swift */; };
+		E4F2AE4E2A60BEA50039DCAA /* GameButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F2AE4D2A60BEA50039DCAA /* GameButton.swift */; };
 		E4F593B52A58BC24007EFA8C /* WordPinApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F593B42A58BC24007EFA8C /* WordPinApp.swift */; };
 		E4F593B72A58BC24007EFA8C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F593B62A58BC24007EFA8C /* ContentView.swift */; };
 		E4F593B92A58BC25007EFA8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4F593B82A58BC25007EFA8C /* Assets.xcassets */; };
@@ -54,7 +56,6 @@
 		E4F2AE142A5FC3F10039DCAA /* IBMPlexSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IBMPlexSans-Medium.ttf"; sourceTree = "<group>"; };
 		E4F2AE152A5FC3F10039DCAA /* IBMPlexSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IBMPlexSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		E4F2AE162A5FC3F10039DCAA /* IBMPlexSans-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IBMPlexSans-MediumItalic.ttf"; sourceTree = "<group>"; };
-		E4F2AE172A5FC3F10039DCAA /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
 		E4F2AE182A5FC3F10039DCAA /* IBMPlexSans-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IBMPlexSans-LightItalic.ttf"; sourceTree = "<group>"; };
 		E4F2AE192A5FC3F10039DCAA /* IBMPlexSans-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IBMPlexSans-ExtraLight.ttf"; sourceTree = "<group>"; };
 		E4F2AE1A2A5FC3F10039DCAA /* IBMPlexSans-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IBMPlexSans-Thin.ttf"; sourceTree = "<group>"; };
@@ -66,11 +67,14 @@
 		E4F2AE202A5FC3F10039DCAA /* IBMPlexSans-ExtraLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IBMPlexSans-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
 		E4F2AE212A5FC3F10039DCAA /* IBMPlexSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IBMPlexSans-Bold.ttf"; sourceTree = "<group>"; };
 		E4F2AE372A5FD3B40039DCAA /* PublicPixel-z84yD.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PublicPixel-z84yD.ttf"; sourceTree = "<group>"; };
-		E4F2AE382A5FD3B40039DCAA /* info.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = info.txt; sourceTree = "<group>"; };
 		E4F2AE3C2A5FD3C60039DCAA /* DigitalNumbers-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DigitalNumbers-Regular.ttf"; sourceTree = "<group>"; };
 		E4F2AE3F2A5FD48E0039DCAA /* VT323-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VT323-Regular.ttf"; sourceTree = "<group>"; };
 		E4F2AE402A5FD48E0039DCAA /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
 		E4F2AE432A5FD8340039DCAA /* Color_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color_ext.swift; sourceTree = "<group>"; };
+		E4F2AE462A60A2D30039DCAA /* NeumorphicScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeumorphicScreen.swift; sourceTree = "<group>"; };
+		E4F2AE492A60A5D90039DCAA /* SubmissionsTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmissionsTable.swift; sourceTree = "<group>"; };
+		E4F2AE4B2A60AB1E0039DCAA /* LightIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightIndicator.swift; sourceTree = "<group>"; };
+		E4F2AE4D2A60BEA50039DCAA /* GameButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameButton.swift; sourceTree = "<group>"; };
 		E4F593B12A58BC24007EFA8C /* WordPin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WordPin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4F593B42A58BC24007EFA8C /* WordPinApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPinApp.swift; sourceTree = "<group>"; };
 		E4F593B62A58BC24007EFA8C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -98,8 +102,10 @@
 		E4F2AE102A5FC2C00039DCAA /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				E4F2AE0E2A5FC2B10039DCAA /* Font_ext.swift */,
-				E4F2AE432A5FD8340039DCAA /* Color_ext.swift */,
+				E4F2AE482A60A2E40039DCAA /* Primitive extensions */,
+				E4F2AE462A60A2D30039DCAA /* NeumorphicScreen.swift */,
+				E4F2AE4B2A60AB1E0039DCAA /* LightIndicator.swift */,
+				E4F2AE4D2A60BEA50039DCAA /* GameButton.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -123,7 +129,6 @@
 				E4F2AE142A5FC3F10039DCAA /* IBMPlexSans-Medium.ttf */,
 				E4F2AE152A5FC3F10039DCAA /* IBMPlexSans-SemiBold.ttf */,
 				E4F2AE162A5FC3F10039DCAA /* IBMPlexSans-MediumItalic.ttf */,
-				E4F2AE172A5FC3F10039DCAA /* OFL.txt */,
 				E4F2AE182A5FC3F10039DCAA /* IBMPlexSans-LightItalic.ttf */,
 				E4F2AE192A5FC3F10039DCAA /* IBMPlexSans-ExtraLight.ttf */,
 				E4F2AE1A2A5FC3F10039DCAA /* IBMPlexSans-Thin.ttf */,
@@ -142,7 +147,6 @@
 			isa = PBXGroup;
 			children = (
 				E4F2AE372A5FD3B40039DCAA /* PublicPixel-z84yD.ttf */,
-				E4F2AE382A5FD3B40039DCAA /* info.txt */,
 			);
 			path = "public-pixel-font";
 			sourceTree = "<group>";
@@ -162,6 +166,15 @@
 				E4F2AE402A5FD48E0039DCAA /* OFL.txt */,
 			);
 			path = VT323;
+			sourceTree = "<group>";
+		};
+		E4F2AE482A60A2E40039DCAA /* Primitive extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E4F2AE0E2A5FC2B10039DCAA /* Font_ext.swift */,
+				E4F2AE432A5FD8340039DCAA /* Color_ext.swift */,
+			);
+			path = "Primitive extensions";
 			sourceTree = "<group>";
 		};
 		E4F593A82A58BC24007EFA8C = {
@@ -208,6 +221,7 @@
 			children = (
 				E4F593B62A58BC24007EFA8C /* ContentView.swift */,
 				E4F593C92A58BCCE007EFA8C /* WordCollectionView.swift */,
+				E4F2AE492A60A5D90039DCAA /* SubmissionsTable.swift */,
 				E4F2AE0C2A5FBFE60039DCAA /* MainScreenList.swift */,
 				E4F2AE102A5FC2C00039DCAA /* Helper */,
 			);
@@ -299,7 +313,6 @@
 				E4F2AE412A5FD48E0039DCAA /* VT323-Regular.ttf in Resources */,
 				E4F2AE2F2A5FC3F10039DCAA /* IBMPlexSans-ExtraLightItalic.ttf in Resources */,
 				E4F2AE272A5FC3F10039DCAA /* IBMPlexSans-LightItalic.ttf in Resources */,
-				E4F2AE262A5FC3F10039DCAA /* OFL.txt in Resources */,
 				E4F2AE2A2A5FC3F10039DCAA /* IBMPlexSans-ThinItalic.ttf in Resources */,
 				E4F593BC2A58BC25007EFA8C /* Preview Assets.xcassets in Resources */,
 				E4F593B92A58BC25007EFA8C /* Assets.xcassets in Resources */,
@@ -307,7 +320,6 @@
 				E4F2AE422A5FD48E0039DCAA /* OFL.txt in Resources */,
 				E4F2AE302A5FC3F10039DCAA /* IBMPlexSans-Bold.ttf in Resources */,
 				E4F2AE252A5FC3F10039DCAA /* IBMPlexSans-MediumItalic.ttf in Resources */,
-				E4F2AE3A2A5FD3B40039DCAA /* info.txt in Resources */,
 				E4F2AE242A5FC3F10039DCAA /* IBMPlexSans-SemiBold.ttf in Resources */,
 				E4F2AE282A5FC3F10039DCAA /* IBMPlexSans-ExtraLight.ttf in Resources */,
 				E4F2AE232A5FC3F10039DCAA /* IBMPlexSans-Medium.ttf in Resources */,
@@ -324,15 +336,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4F2AE4E2A60BEA50039DCAA /* GameButton.swift in Sources */,
 				E4F593BE2A58BC25007EFA8C /* Persistence.swift in Sources */,
 				E4F593CA2A58BCCE007EFA8C /* WordCollectionView.swift in Sources */,
 				E4F593CF2A5F3C0B007EFA8C /* Submission_ext.swift in Sources */,
 				E4F593B72A58BC24007EFA8C /* ContentView.swift in Sources */,
+				E4F2AE4C2A60AB1E0039DCAA /* LightIndicator.swift in Sources */,
 				E4F593B52A58BC24007EFA8C /* WordPinApp.swift in Sources */,
 				E4F593CC2A5DF65C007EFA8C /* URLTask.swift in Sources */,
 				E4F593C12A58BC25007EFA8C /* WordPin.xcdatamodeld in Sources */,
 				E4F2AE442A5FD8340039DCAA /* Color_ext.swift in Sources */,
 				E4F2AE092A5F58C70039DCAA /* APIs.swift in Sources */,
+				E4F2AE4A2A60A5D90039DCAA /* SubmissionsTable.swift in Sources */,
+				E4F2AE472A60A2D30039DCAA /* NeumorphicScreen.swift in Sources */,
 				E4F2AE0F2A5FC2B10039DCAA /* Font_ext.swift in Sources */,
 				E4F2AE0D2A5FBFE60039DCAA /* MainScreenList.swift in Sources */,
 				E4F2AE0B2A5F65070039DCAA /* Reachability.swift in Sources */,
@@ -469,6 +485,7 @@
 				DEVELOPMENT_TEAM = W9299UY4N9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WordPin/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -500,6 +517,7 @@
 				DEVELOPMENT_TEAM = W9299UY4N9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WordPin/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

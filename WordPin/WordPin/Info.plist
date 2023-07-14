@@ -6,5 +6,42 @@
 	<array>
 		<string>remote-notification</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+        <string>IBMPlexSans-SemiBoldItalic.ttf</string>
+        <string>IBMPlexSans-Medium.ttf</string>
+        <string>IBMPlexSans-SemiBold.ttf</string>
+        <string>IBMPlexSans-MediumItalic.ttf</string>
+        <string>IBMPlexSans-LightItalic.ttf</string>
+        <string>IBMPlexSans-ExtraLight.ttf</string>
+        <string>IBMPlexSans-Thin.ttf</string>
+        <string>IBMPlexSans-ThinItalic.ttf</string>
+        <string>IBMPlexSans-BoldItalic.ttf</string>
+        <string>IBMPlexSans-Light.ttf</string>
+        <string>IBMPlexSans-Italic.ttf</string>
+        <string>IBMPlexSans-Regular.ttf</string>
+        <string>IBMPlexSans-ExtraLightItalic.ttf</string>
+        <string>IBMPlexSans-Bold.ttf</string>
+        <string>PublicPixel-z84yD.ttf</string>
+        <string>DigitalNumbers-Regular.ttf</string>
+        <string>VT323-Regular.ttf</string>
+		<string>Assets/IBM_Plex_Sans/IBMPlexSans-SemiBoldItalic.ttf</string>
+		<string>Assets/IBM_Plex_Sans/IBMPlexSans-Medium.ttf</string>
+		<string>Assets/IBM_Plex_Sans/IBMPlexSans-SemiBold.ttf</string>
+		<string>Assets/IBM_Plex_Sans/IBMPlexSans-MediumItalic.ttf</string>
+		<string>Assets/IBM_Plex_Sans/IBMPlexSans-LightItalic.ttf</string>
+		<string>Assets/IBM_Plex_Sans/IBMPlexSans-ExtraLight.ttf</string>
+		<string>Assets/IBM_Plex_Sans/IBMPlexSans-Thin.ttf</string>
+		<string>Assets/IBM_Plex_Sans/IBMPlexSans-ThinItalic.ttf</string>
+		<string>Assets/IBM_Plex_Sans/IBMPlexSans-BoldItalic.ttf</string>
+		<string>Assets/IBM_Plex_Sans/IBMPlexSans-Light.ttf</string>
+		<string>Assets/IBM_Plex_Sans/IBMPlexSans-Italic.ttf</string>
+		<string>Assets/IBM_Plex_Sans/IBMPlexSans-Regular.ttf</string>
+		<string>Assets/IBM_Plex_Sans/IBMPlexSans-ExtraLightItalic.ttf</string>
+		<string>Assets/IBM_Plex_Sans/IBMPlexSans-Bold.ttf</string>
+		<string>Assets/public-pixel-font/PublicPixel-z84yD.ttf</string>
+		<string>Assets/DigitalNumbers/DigitalNumbers-Regular.ttf</string>
+		<string>Assets/VT323/VT323-Regular.ttf</string>
+	</array>
 </dict>
 </plist>

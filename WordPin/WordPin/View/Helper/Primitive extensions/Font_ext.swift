@@ -21,7 +21,7 @@ extension Font {
         Font.custom("VT323-Regular", size: UIFont.preferredFont(forTextStyle: size).pointSize)
     }
     
-    public static func primary(size: CGFloat, emphasis: Emphasis = .regular) -> Font {
+    public static func primary(size: UIFont.TextStyle = .body, emphasis: Emphasis = .regular) -> Font {
         var font = "IBMPlexSans-Regular"
         switch emphasis {
         case .semiBoldItalic: font = "IBMPlexSans-SemiBoldItalic"
@@ -38,7 +38,7 @@ extension Font {
         case .bold: font = "IBMPlexSans-Bold"
         default: break
         }
-        return Font.custom(font, size: size)
+        return Font.custom(font, size: UIFont.preferredFont(forTextStyle: size).pointSize)
     }
     
     public enum Emphasis {

@@ -12,6 +12,8 @@ import SwiftUI
 extension Color {
     // MARK: - Environment
     static let background: Color = Color("background")
+    static let backgroundShadow: Color = Color("backgroundShadow")
+    static let backgroundFont: Color = Color("backgroundFont")
     
     // MARK: - LCD Display
     static let screenBackground: Color = Color("screenBackground")
@@ -22,4 +24,8 @@ extension Color {
     // MARK: - Light
     static let success: Color = Color("success")
     static let failure: Color = Color("failure")
+    
+    // MARK: - Colors
+    static let jade: Color = Color("jade")
+    static let jadeShadow: Color = Color("jadeShadow")
 }
