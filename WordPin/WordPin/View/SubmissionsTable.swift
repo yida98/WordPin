@@ -49,8 +49,8 @@ struct GameText: ViewModifier {
     
     func body(content: Content) -> some View {
         content
+            .textShadow()
             .font(.secondaryFont(size: size))
             .foregroundColor(.primaryFont)
-            .shadow(color: .primaryFont.opacity(0.25), radius: 1, x: 1, y: 1)
     }
 }

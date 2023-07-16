@@ -123,8 +123,8 @@ struct DigitalText: ViewModifier {
     let size: UIFont.TextStyle
     func body(content: Content) -> some View {
         content
+            .textShadow()
             .font(.digitalFont(size: size))
-            .shadow(color: .primaryFont.opacity(0.25), radius: 1, x: 1, y: 1)
     }
 }
 

@@ -32,18 +32,18 @@ struct WordCollectionView: View {
                     // Heading banner
                     HStack {
                         Text("Word")
+                            .textShadow()
                             .font(.digitalFont(size: .headline))
                             .foregroundColor(.secondaryFont)
-                            .shadow(color: .primaryFont.opacity(0.25), radius: 1, x: 1, y: 1)
                         Spacer()
                         Image(systemName: "star.fill")
+                            .textShadow()
                             .frame(width: scoreWidth)
                             .foregroundColor(.secondaryFont)
-                            .shadow(color: .primaryFont.opacity(0.25), radius: 1, x: 1, y: 1)
                         Image(systemName: "globe.americas.fill")
+                            .textShadow()
                             .frame(width: scoreWidth)
                             .foregroundColor(.secondaryFont)
-                            .shadow(color: .primaryFont.opacity(0.25), radius: 1, x: 1, y: 1)
                     }
                     SubmissionsTable()
                 }.padding(.top, 6)
@@ -98,9 +98,10 @@ struct TitleText: ViewModifier {
     
     func body(content: Content) -> some View {
         content
+            .textEngravement()
             .font(.primary(size: size, emphasis: .medium))
             .foregroundColor(.screenFont)
-            .shadow(color: .black.opacity(0.5), radius: 0.5, x: -0.5, y: -0.5)
-            .shadow(color: .white.opacity(0.5), radius: 1, x: 1, y: 1)
+//            .shadow(color: .black.opacity(0.5), radius: 0.5, x: -0.5, y: -0.5)
+//            .shadow(color: .white.opacity(0.5), radius: 1, x: 1, y: 1)
     }
 }
