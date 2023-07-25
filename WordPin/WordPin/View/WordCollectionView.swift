@@ -75,9 +75,8 @@ struct WordCollectionView: View {
         .sheet(isPresented: $viewModel.isPresentingGame) {
             // TODO: On dismiss
         } content: {
-            GameView(word: "lmao")
+            GameView(viewModel: GameViewModel("lmao"))
         }
-
     }
 }
 

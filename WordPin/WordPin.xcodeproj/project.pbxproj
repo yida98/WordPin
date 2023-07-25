@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E4BF80B72A6E406A0073EE54 /* GameKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BF80B62A6E406A0073EE54 /* GameKeyboard.swift */; };
+		E4BF80B92A6E581F0073EE54 /* String_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BF80B82A6E581F0073EE54 /* String_ext.swift */; };
+		E4BF80BB2A6E74E20073EE54 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BF80BA2A6E74E20073EE54 /* GameViewModel.swift */; };
+		E4BF80BD2A6F589A0073EE54 /* GameClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BF80BC2A6F589A0073EE54 /* GameClock.swift */; };
 		E4F2AE052A5F49430039DCAA /* Submission.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F2AE042A5F49430039DCAA /* Submission.swift */; };
 		E4F2AE092A5F58C70039DCAA /* APIs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F2AE082A5F58C70039DCAA /* APIs.swift */; };
 		E4F2AE0B2A5F65070039DCAA /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F2AE0A2A5F65070039DCAA /* Reachability.swift */; };
@@ -51,6 +55,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E4BF80B62A6E406A0073EE54 /* GameKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameKeyboard.swift; sourceTree = "<group>"; };
+		E4BF80B82A6E581F0073EE54 /* String_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String_ext.swift; sourceTree = "<group>"; };
+		E4BF80BA2A6E74E20073EE54 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
+		E4BF80BC2A6F589A0073EE54 /* GameClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameClock.swift; sourceTree = "<group>"; };
 		E4F2AE042A5F49430039DCAA /* Submission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submission.swift; sourceTree = "<group>"; };
 		E4F2AE082A5F58C70039DCAA /* APIs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIs.swift; sourceTree = "<group>"; };
 		E4F2AE0A2A5F65070039DCAA /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
@@ -80,7 +88,7 @@
 		E4F2AE4B2A60AB1E0039DCAA /* LightIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightIndicator.swift; sourceTree = "<group>"; };
 		E4F2AE4D2A60BEA50039DCAA /* GameButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameButton.swift; sourceTree = "<group>"; };
 		E4F2AE4F2A60FF5B0039DCAA /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
-		E4F2AE522A6107350039DCAA /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Constant.swift; path = "Primitive extensions/Constant.swift"; sourceTree = "<group>"; };
+		E4F2AE522A6107350039DCAA /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		E4F2AE542A61E9000039DCAA /* WordCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCollectionViewModel.swift; sourceTree = "<group>"; };
 		E4F2AE562A637B2B0039DCAA /* Text_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text_ext.swift; sourceTree = "<group>"; };
 		E4F593B12A58BC24007EFA8C /* WordPin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WordPin.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,8 +121,8 @@
 				E4F2AE482A60A2E40039DCAA /* Primitive extensions */,
 				E4F2AE462A60A2D30039DCAA /* NeumorphicScreen.swift */,
 				E4F2AE4B2A60AB1E0039DCAA /* LightIndicator.swift */,
-				E4F2AE522A6107350039DCAA /* Constant.swift */,
 				E4F2AE4D2A60BEA50039DCAA /* GameButton.swift */,
+				E4BF80B62A6E406A0073EE54 /* GameKeyboard.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -181,8 +189,10 @@
 			isa = PBXGroup;
 			children = (
 				E4F2AE0E2A5FC2B10039DCAA /* Font_ext.swift */,
+				E4BF80B82A6E581F0073EE54 /* String_ext.swift */,
 				E4F2AE562A637B2B0039DCAA /* Text_ext.swift */,
 				E4F2AE432A5FD8340039DCAA /* Color_ext.swift */,
+				E4F2AE522A6107350039DCAA /* Constant.swift */,
 			);
 			path = "Primitive extensions";
 			sourceTree = "<group>";
@@ -191,6 +201,8 @@
 			isa = PBXGroup;
 			children = (
 				E4F2AE4F2A60FF5B0039DCAA /* GameView.swift */,
+				E4BF80BC2A6F589A0073EE54 /* GameClock.swift */,
+				E4BF80BA2A6E74E20073EE54 /* GameViewModel.swift */,
 			);
 			path = "Game view";
 			sourceTree = "<group>";
@@ -356,16 +368,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4BF80B92A6E581F0073EE54 /* String_ext.swift in Sources */,
 				E4F2AE4E2A60BEA50039DCAA /* GameButton.swift in Sources */,
 				E4F593BE2A58BC25007EFA8C /* Persistence.swift in Sources */,
 				E4F593CA2A58BCCE007EFA8C /* WordCollectionView.swift in Sources */,
 				E4F593CF2A5F3C0B007EFA8C /* Submission_ext.swift in Sources */,
+				E4BF80B72A6E406A0073EE54 /* GameKeyboard.swift in Sources */,
 				E4F2AE552A61E9000039DCAA /* WordCollectionViewModel.swift in Sources */,
 				E4F2AE502A60FF5B0039DCAA /* GameView.swift in Sources */,
 				E4F593B72A58BC24007EFA8C /* ContentView.swift in Sources */,
 				E4F2AE4C2A60AB1E0039DCAA /* LightIndicator.swift in Sources */,
 				E4F593B52A58BC24007EFA8C /* WordPinApp.swift in Sources */,
 				E4F2AE532A6107350039DCAA /* Constant.swift in Sources */,
+				E4BF80BD2A6F589A0073EE54 /* GameClock.swift in Sources */,
+				E4BF80BB2A6E74E20073EE54 /* GameViewModel.swift in Sources */,
 				E4F593CC2A5DF65C007EFA8C /* URLTask.swift in Sources */,
 				E4F593C12A58BC25007EFA8C /* WordPin.xcdatamodeld in Sources */,
 				E4F2AE442A5FD8340039DCAA /* Color_ext.swift in Sources */,

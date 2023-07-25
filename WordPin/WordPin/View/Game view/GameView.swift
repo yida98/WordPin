@@ -8,85 +8,79 @@
 import SwiftUI
 
 struct GameView: View {
+    @ObservedObject var viewModel: GameViewModel
+    @State private var keyboardInput: Character?
     @State var input: String = ""
-    let word: String
-    
+
     var body: some View {
         VStack {
-            HStack {
-                Spacer()
-                HStack {
-                    Text("175:53")
-                        .digitalText()
-                        .foregroundColor(.primaryFont)
-                    Divider()
-                    Text("3")
-                        .digitalText()
-                        .foregroundColor(.primaryFont)
-                    Divider()
-                    Text("2")
-                        .digitalText()
-                        .foregroundColor(.tertiaryFont)
-                }
-                .padding(5)
-                .padding(.horizontal, 4)
-                .neumorphicScreen {
-                    RoundedRectangle(cornerRadius: 10)
-                }
-                .fixedSize()
-            }.padding(.horizontal, 20)
+            GameClock(count: $viewModel.wordCount, globalHighScore: 5)
+                .padding(.horizontal, 20)
             Spacer()
             HStack(spacing: letterSpacing()) {
-                ForEach(0..<word.count, id: \.self) { wordIndex in
+                ForEach(0..<viewModel.word.count, id: \.self) { wordIndex in
                     VStack(spacing: 0) {
-                        Text(String(word[word.index(word.startIndex, offsetBy: wordIndex)]).uppercased())
+                        Text(String(viewModel.word[viewModel.word.index(viewModel.word.startIndex, offsetBy: wordIndex)]).uppercased())
                             .titleText(.title2)
                             .minimumScaleFactor(0.8)
                         LightIndicator(on: wordIndex % 3 == 0)
                     }.frame(width: letterWidth())
                 }
             }
-            VStack {
-                ScrollView {
-                    VStack(spacing: 20) {
-                        ForEach(0..<3) { index in
-                            HStack(spacing: letterSpacing()) {
-                                ForEach(0..<word.count, id: \.self) { wordIndex in
-                                    VStack(spacing: 0) {
-                                        Text(String(word[word.index(word.startIndex, offsetBy: wordIndex)]).uppercased())
-                                            .digitalText()
-                                            .foregroundColor(.primaryFont)
-                                            .minimumScaleFactor(0.8)
-                                    }.frame(width: letterWidth())
+            VStack(spacing: 20) {
+                VStack {
+                    ScrollView {
+                        VStack(spacing: 20) {
+                            ForEach(0..<3) { index in
+                                HStack(spacing: letterSpacing()) {
+                                    ForEach(0..<viewModel.word.count, id: \.self) { wordIndex in
+                                        VStack(spacing: 0) {
+                                            Text(String(viewModel.word[viewModel.word.index(viewModel.word.startIndex, offsetBy: wordIndex)]).uppercased())
+                                                .digitalText()
+                                                .foregroundColor(.primaryFont)
+                                                .minimumScaleFactor(0.8)
+                                        }.frame(width: letterWidth())
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                Divider()
-                HStack(spacing: letterSpacing()) {
-                    ForEach(0..<word.count, id: \.self) { wordIndex in
-                        VStack(spacing: 4) {
-                            Text("B")
-                                .digitalText()
-                                .foregroundColor(.primaryFont)
-                                .minimumScaleFactor(0.8)
-                            Rectangle()
-                                .fill(Color.secondaryFont)
-                                .frame(width: letterWidth(), height: 1)
+                    Divider()
+                    HStack(spacing: letterSpacing()) {
+                        ForEach(0..<viewModel.word.count, id: \.self) { wordIndex in
+                            VStack(spacing: 4) {
+                                Text(input(at: wordIndex))
+                                    .digitalText()
+                                    .foregroundColor(.primaryFont)
+                                    .minimumScaleFactor(0.8)
+                                Rectangle()
+                                    .fill(Color.secondaryFont)
+                                    .frame(width: letterWidth(), height: 1)
+                            }
+                            .frame(width: letterWidth())
                         }
-                        .frame(width: letterWidth())
                     }
                 }
+                .padding(10)
+                .padding(.horizontal, 10)
+                .frame(width: gameFrameSize().width, height: gameFrameSize().height)
+                .fixedSize()
+                .neumorphicScreen {
+                    RoundedRectangle(cornerRadius: 20)
+                }
+                GameKeyboard(key: $keyboardInput)
+                    .onChange(of: keyboardInput) { newValue in
+                        if let newValue = newValue, newValue.isLetter, input.count < viewModel.word.count {
+                            input += String(newValue)
+                        } else if newValue == "⌫", input.count > 0 {
+                            input.remove(at: input.index(before: input.endIndex))
+                        } else if newValue == "⏎", input.count == viewModel.word.count {
+                            viewModel.submit(input)
+                            input = ""
+                        }
+                        keyboardInput = nil
+                    }
             }
-            .padding(10)
-            .padding(.horizontal, 10)
-            .frame(width: gameFrameSize().width, height: gameFrameSize().height)
-            .fixedSize()
-            .neumorphicScreen {
-                RoundedRectangle(cornerRadius: 20)
-            }
-            Spacer()
             Spacer()
         }.scenePadding(.minimum, edges: .all)
             .background(Color.background)
@@ -109,13 +103,14 @@ struct GameView: View {
     }
     
     private func totalInputLength() -> CGFloat {
-        CGFloat(word.count) * (letterWidth() + letterSpacing()) - letterSpacing()
+        CGFloat(viewModel.word.count) * (letterWidth() + letterSpacing()) - letterSpacing()
     }
-}
 
-struct GameView_Previews: PreviewProvider {
-    static var previews: some View {
-        GameView(word: "biggest")
+    private func input(at index: Int) -> String {
+        if index < input.count {
+            return String(input[index])
+        }
+        return " "
     }
 }
 
