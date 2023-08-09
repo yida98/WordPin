@@ -251,8 +251,8 @@
 			children = (
 				E4F593B62A58BC24007EFA8C /* ContentView.swift */,
 				E4F593C92A58BCCE007EFA8C /* WordCollectionView.swift */,
-				E4F2AE542A61E9000039DCAA /* WordCollectionViewModel.swift */,
 				E4F2AE492A60A5D90039DCAA /* SubmissionsTable.swift */,
+				E4F2AE542A61E9000039DCAA /* WordCollectionViewModel.swift */,
 				E4F2AE512A60FF5F0039DCAA /* Game view */,
 				E4F2AE0C2A5FBFE60039DCAA /* MainScreenList.swift */,
 				E4F2AE102A5FC2C00039DCAA /* Helper */,

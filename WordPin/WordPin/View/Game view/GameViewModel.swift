@@ -17,10 +17,16 @@ class GameViewModel: ObservableObject {
     @Published var word: String
     @Published var wordCount = 0
 
-    init(_ word: String) {
-        self.word = word
+    init(_ word: String? = nil) {
+        self.word = word ?? ""
 
-
+        if word == nil {
+            Task(priority: .background) { [weak self] in
+                if let newWord = try? await URLTask.shared.getNewWord().first {
+                    self?.word = newWord
+                }
+            }
+        }
     }
 
     func submit(_ word: String) {

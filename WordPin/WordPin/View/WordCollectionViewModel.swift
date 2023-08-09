@@ -17,4 +17,8 @@ class WordCollectionViewModel: ObservableObject {
     func playNewGame() {
         isPresentingGame = true
     }
+
+    func makeNewGame(_ word: String? = nil) -> GameViewModel {
+        GameViewModel(word)
+    }
 }

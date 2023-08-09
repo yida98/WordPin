@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SubmissionsTable: View {
+    @State private var selectedWord: String?
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -26,10 +27,21 @@ struct SubmissionsTable: View {
                             .minimumScaleFactor(0.5)
                             .frame(width: 50)
                     }
+                    .onTapGesture {
+                        selectedWord = "lmao"
+                    }
                 }
+            }.sheet(item: $selectedWord) {
+                // TODO: On dismiss save
+            } content: { value in
+                GameView(viewModel: GameViewModel(value))
             }
         }
     }
+}
+
+extension String: Identifiable {
+    public var id: String { self }
 }
 
 struct SubmissionsTable_Previews: PreviewProvider {

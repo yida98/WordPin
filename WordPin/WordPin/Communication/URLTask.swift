@@ -9,6 +9,22 @@ import Foundation
 import Combine
 
 class URLTask {
+    static let shared = URLTask()
+
+    private init() { }
+
+    func getNewWord(length: Int = 0) async throws -> [String] {
+        guard let requestURL = RandomWordAPI.requestURL(length: length) else {
+            throw RequestError.InvalidRequestURL
+        }
+
+        var urlRequest = URLRequest(url: requestURL, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 30.0)
+        urlRequest.httpMethod = "GET"
+
+        let (data, _) = try await URLSession.shared.data(for: urlRequest)
+        return try JSONDecoder().decode([String].self, from: data)
+    }
+
     func getRandomWord(length: Int = 0) -> AnyPublisher<[String], Error> {
         guard let requestURL = RandomWordAPI.requestURL(length: length) else {
             return Fail(error: RequestError.InvalidRequestURL).eraseToAnyPublisher()
@@ -16,7 +32,7 @@ class URLTask {
         
         var urlRequest = URLRequest(url: requestURL, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 30.0)
         urlRequest.httpMethod = "GET"
-        
+
         return URLSession.shared.dataTaskPublisher(for: urlRequest)
             .tryMap { (data: Data, response: URLResponse) in
                 if let response = response as? HTTPURLResponse, response.statusCode == HTTPStatusCode.OK.rawValue {
