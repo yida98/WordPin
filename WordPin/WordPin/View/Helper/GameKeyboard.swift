@@ -27,7 +27,7 @@ struct GameKeyboard: View {
                         Button(String(letter)) {
                             key = letter
                         }
-                        .buttonStyle(KeyboardKey(letter.isLetter ? .primary(size: .headline, emphasis: .medium) : .headline))
+                        .buttonStyle(KeyboardKey(letter.isLetter ? .primary(size: .title2, emphasis: .medium) : .headline))
                     }
                     Spacer(minLength: 0)
                 }
@@ -37,11 +37,14 @@ struct GameKeyboard: View {
 }
 
 struct KeyboardKey: ButtonStyle {
-    private let width: CGFloat = 26
-    private let height: CGFloat = 28
+    private let width: CGFloat
+    private let height: CGFloat
     private let font: Font
 
     init(_ font: Font) {
+        let width = (Constant.screenBounds.width / 10) - 10
+        self.width = width
+        self.height = width + 2
         self.font = font
     }
 
@@ -52,12 +55,8 @@ struct KeyboardKey: ButtonStyle {
             .padding(4)
             .background {
                 RoundedRectangle(cornerRadius: width / 4)
-                    .stroke(Color.jade, lineWidth: 2)
+                    .fill(Color.jade.opacity(0.2))
                     .frame(width: width, height: height)
-                    .background {
-                        RoundedRectangle(cornerRadius: width / 4)
-                            .fill(configuration.isPressed ? Color.jade : Color.clear)
-                    }
             }
             .frame(width: width, height: height)
     }

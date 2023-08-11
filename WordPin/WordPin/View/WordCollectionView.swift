@@ -17,16 +17,6 @@ struct WordCollectionView: View {
     
     var body: some View {
         VStack {
-            // Title
-            HStack {
-                ForEach(0..<7) { index in
-                    VStack(spacing: 0) {
-                        Text(String(title[title.index(title.startIndex, offsetBy: index)]))
-                            .titleText(.title2)
-                        LightIndicator(on: index % 3 == 0)
-                    }.frame(width: titleWidth)
-                }
-            }
             ZStack {
                 VStack {
                     // Heading banner
@@ -56,15 +46,14 @@ struct WordCollectionView: View {
             }
             .padding(20)
             .padding(.horizontal, 10)
-            .neumorphicScreen {
-                RoundedRectangle(cornerRadius: 10)
-            }
             .scenePadding(.minimum, edges: .horizontal)
             
             HStack {
                 Spacer()
-                GameButton {
+                Button {
                     viewModel.playNewGame()
+                } label: {
+                    Text("Play")
                 }
             }
             .padding(.trailing, 20)
@@ -97,10 +86,7 @@ struct TitleText: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .textEngravement()
             .font(.primary(size: size, emphasis: .medium))
-            .foregroundColor(.screenFont)
-//            .shadow(color: .black.opacity(0.5), radius: 0.5, x: -0.5, y: -0.5)
-//            .shadow(color: .white.opacity(0.5), radius: 1, x: 1, y: 1)
+            .foregroundColor(.white)
     }
 }

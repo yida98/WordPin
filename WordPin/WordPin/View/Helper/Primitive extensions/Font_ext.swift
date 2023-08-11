@@ -40,8 +40,32 @@ extension Font {
         }
         return Font.custom(font, size: UIFont.preferredFont(forTextStyle: size).pointSize)
     }
+
+    public static func monospaced(size: UIFont.TextStyle = .body, emphasis: Emphasis = .regular) -> Font {
+        var font = "DejaVuSansMono"
+        switch emphasis {
+        case .boldItalic: font = "DejaVuSansMono-BoldOblique"
+        case .bold: font = "DejaVuSansMono-Bold"
+        case .italic: font = "DejaVuSansMono-Oblique"
+        default: break
+        }
+        return Font.custom(font, size: UIFont.preferredFont(forTextStyle: size).pointSize)
+    }
     
     public enum Emphasis {
         case semiBoldItalic, medium, semiBold, mediumItalic, lightItalic, extraLight, thin, thinItalic, boldItalic, light, italic, regular, extraLightItalic, bold
+    }
+}
+
+extension UIFont {
+    public static func monospaced(size: UIFont.TextStyle = .body, emphasis: Font.Emphasis = .regular) -> UIFont {
+        var font = "DejaVuSansMono"
+        switch emphasis {
+        case .boldItalic: font = "DejaVuSansMono-BoldOblique"
+        case .bold: font = "DejaVuSansMono-Bold"
+        case .italic: font = "DejaVuSansMono-Oblique"
+        default: break
+        }
+        return UIFont(name: font, size: UIFont.preferredFont(forTextStyle: size).pointSize) ?? .systemFont(ofSize: UIFont.preferredFont(forTextStyle: size).pointSize)
     }
 }

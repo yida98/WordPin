@@ -25,23 +25,10 @@
         <string>PublicPixel-z84yD.ttf</string>
         <string>DigitalNumbers-Regular.ttf</string>
         <string>VT323-Regular.ttf</string>
-		<string>Assets/IBM_Plex_Sans/IBMPlexSans-SemiBoldItalic.ttf</string>
-		<string>Assets/IBM_Plex_Sans/IBMPlexSans-Medium.ttf</string>
-		<string>Assets/IBM_Plex_Sans/IBMPlexSans-SemiBold.ttf</string>
-		<string>Assets/IBM_Plex_Sans/IBMPlexSans-MediumItalic.ttf</string>
-		<string>Assets/IBM_Plex_Sans/IBMPlexSans-LightItalic.ttf</string>
-		<string>Assets/IBM_Plex_Sans/IBMPlexSans-ExtraLight.ttf</string>
-		<string>Assets/IBM_Plex_Sans/IBMPlexSans-Thin.ttf</string>
-		<string>Assets/IBM_Plex_Sans/IBMPlexSans-ThinItalic.ttf</string>
-		<string>Assets/IBM_Plex_Sans/IBMPlexSans-BoldItalic.ttf</string>
-		<string>Assets/IBM_Plex_Sans/IBMPlexSans-Light.ttf</string>
-		<string>Assets/IBM_Plex_Sans/IBMPlexSans-Italic.ttf</string>
-		<string>Assets/IBM_Plex_Sans/IBMPlexSans-Regular.ttf</string>
-		<string>Assets/IBM_Plex_Sans/IBMPlexSans-ExtraLightItalic.ttf</string>
-		<string>Assets/IBM_Plex_Sans/IBMPlexSans-Bold.ttf</string>
-		<string>Assets/public-pixel-font/PublicPixel-z84yD.ttf</string>
-		<string>Assets/DigitalNumbers/DigitalNumbers-Regular.ttf</string>
-		<string>Assets/VT323/VT323-Regular.ttf</string>
+        <string>DejaVuSansMono.ttf</string>
+        <string>DejaVuSansMono-Bold.ttf</string>
+        <string>DejaVuSansMono-BoldOblique.ttf</string>
+        <string>DejaVuSansMono-Oblique.ttf</string>
 	</array>
 </dict>
 </plist>

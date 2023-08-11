@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E45735C52A85A56600454B01 /* DejaVu Fonts License.txt in Resources */ = {isa = PBXBuildFile; fileRef = E45735C02A85A56600454B01 /* DejaVu Fonts License.txt */; };
+		E45735C62A85A56600454B01 /* DejaVuSansMono-BoldOblique.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E45735C12A85A56600454B01 /* DejaVuSansMono-BoldOblique.ttf */; };
+		E45735C72A85A56600454B01 /* DejaVuSansMono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E45735C22A85A56600454B01 /* DejaVuSansMono.ttf */; };
+		E45735C82A85A56600454B01 /* DejaVuSansMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E45735C32A85A56600454B01 /* DejaVuSansMono-Bold.ttf */; };
+		E45735C92A85A56600454B01 /* DejaVuSansMono-Oblique.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E45735C42A85A56600454B01 /* DejaVuSansMono-Oblique.ttf */; };
+		E45735CB2A85B4AA00454B01 /* ContiguousRectangles.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45735CA2A85B4AA00454B01 /* ContiguousRectangles.swift */; };
 		E4BF80B72A6E406A0073EE54 /* GameKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BF80B62A6E406A0073EE54 /* GameKeyboard.swift */; };
 		E4BF80B92A6E581F0073EE54 /* String_ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BF80B82A6E581F0073EE54 /* String_ext.swift */; };
 		E4BF80BB2A6E74E20073EE54 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BF80BA2A6E74E20073EE54 /* GameViewModel.swift */; };
@@ -55,6 +61,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E45735C02A85A56600454B01 /* DejaVu Fonts License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "DejaVu Fonts License.txt"; sourceTree = "<group>"; };
+		E45735C12A85A56600454B01 /* DejaVuSansMono-BoldOblique.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DejaVuSansMono-BoldOblique.ttf"; sourceTree = "<group>"; };
+		E45735C22A85A56600454B01 /* DejaVuSansMono.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DejaVuSansMono.ttf; sourceTree = "<group>"; };
+		E45735C32A85A56600454B01 /* DejaVuSansMono-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DejaVuSansMono-Bold.ttf"; sourceTree = "<group>"; };
+		E45735C42A85A56600454B01 /* DejaVuSansMono-Oblique.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DejaVuSansMono-Oblique.ttf"; sourceTree = "<group>"; };
+		E45735CA2A85B4AA00454B01 /* ContiguousRectangles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContiguousRectangles.swift; sourceTree = "<group>"; };
 		E4BF80B62A6E406A0073EE54 /* GameKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameKeyboard.swift; sourceTree = "<group>"; };
 		E4BF80B82A6E581F0073EE54 /* String_ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String_ext.swift; sourceTree = "<group>"; };
 		E4BF80BA2A6E74E20073EE54 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
@@ -115,12 +127,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E45735BF2A85A56600454B01 /* dejavu-sans-mono */ = {
+			isa = PBXGroup;
+			children = (
+				E45735C02A85A56600454B01 /* DejaVu Fonts License.txt */,
+				E45735C12A85A56600454B01 /* DejaVuSansMono-BoldOblique.ttf */,
+				E45735C22A85A56600454B01 /* DejaVuSansMono.ttf */,
+				E45735C32A85A56600454B01 /* DejaVuSansMono-Bold.ttf */,
+				E45735C42A85A56600454B01 /* DejaVuSansMono-Oblique.ttf */,
+			);
+			path = "dejavu-sans-mono";
+			sourceTree = "<group>";
+		};
 		E4F2AE102A5FC2C00039DCAA /* Helper */ = {
 			isa = PBXGroup;
 			children = (
 				E4F2AE482A60A2E40039DCAA /* Primitive extensions */,
 				E4F2AE462A60A2D30039DCAA /* NeumorphicScreen.swift */,
 				E4F2AE4B2A60AB1E0039DCAA /* LightIndicator.swift */,
+				E45735CA2A85B4AA00454B01 /* ContiguousRectangles.swift */,
 				E4F2AE4D2A60BEA50039DCAA /* GameButton.swift */,
 				E4BF80B62A6E406A0073EE54 /* GameKeyboard.swift */,
 			);
@@ -130,6 +155,7 @@
 		E4F2AE112A5FC3D70039DCAA /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				E45735BF2A85A56600454B01 /* dejavu-sans-mono */,
 				E4F2AE3E2A5FD48E0039DCAA /* VT323 */,
 				E4F2AE3B2A5FD3C60039DCAA /* DigitalNumbers */,
 				E4F2AE362A5FD3B40039DCAA /* public-pixel-font */,
@@ -339,8 +365,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4F2AE392A5FD3B40039DCAA /* PublicPixel-z84yD.ttf in Resources */,
+				E45735C52A85A56600454B01 /* DejaVu Fonts License.txt in Resources */,
+				E45735C72A85A56600454B01 /* DejaVuSansMono.ttf in Resources */,
 				E4F2AE2B2A5FC3F10039DCAA /* IBMPlexSans-BoldItalic.ttf in Resources */,
 				E4F2AE292A5FC3F10039DCAA /* IBMPlexSans-Thin.ttf in Resources */,
+				E45735C62A85A56600454B01 /* DejaVuSansMono-BoldOblique.ttf in Resources */,
 				E4F2AE3D2A5FD3C60039DCAA /* DigitalNumbers-Regular.ttf in Resources */,
 				E4F2AE412A5FD48E0039DCAA /* VT323-Regular.ttf in Resources */,
 				E4F2AE2F2A5FC3F10039DCAA /* IBMPlexSans-ExtraLightItalic.ttf in Resources */,
@@ -349,6 +378,7 @@
 				E4F593BC2A58BC25007EFA8C /* Preview Assets.xcassets in Resources */,
 				E4F593B92A58BC25007EFA8C /* Assets.xcassets in Resources */,
 				E4F2AE2E2A5FC3F10039DCAA /* IBMPlexSans-Regular.ttf in Resources */,
+				E45735C82A85A56600454B01 /* DejaVuSansMono-Bold.ttf in Resources */,
 				E4F2AE422A5FD48E0039DCAA /* OFL.txt in Resources */,
 				E4F2AE302A5FC3F10039DCAA /* IBMPlexSans-Bold.ttf in Resources */,
 				E4F2AE252A5FC3F10039DCAA /* IBMPlexSans-MediumItalic.ttf in Resources */,
@@ -358,6 +388,7 @@
 				E4F2AE2C2A5FC3F10039DCAA /* IBMPlexSans-Light.ttf in Resources */,
 				E4F2AE222A5FC3F10039DCAA /* IBMPlexSans-SemiBoldItalic.ttf in Resources */,
 				E4F2AE2D2A5FC3F10039DCAA /* IBMPlexSans-Italic.ttf in Resources */,
+				E45735C92A85A56600454B01 /* DejaVuSansMono-Oblique.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,6 +410,7 @@
 				E4F593B72A58BC24007EFA8C /* ContentView.swift in Sources */,
 				E4F2AE4C2A60AB1E0039DCAA /* LightIndicator.swift in Sources */,
 				E4F593B52A58BC24007EFA8C /* WordPinApp.swift in Sources */,
+				E45735CB2A85B4AA00454B01 /* ContiguousRectangles.swift in Sources */,
 				E4F2AE532A6107350039DCAA /* Constant.swift in Sources */,
 				E4BF80BD2A6F589A0073EE54 /* GameClock.swift in Sources */,
 				E4BF80BB2A6E74E20073EE54 /* GameViewModel.swift in Sources */,
