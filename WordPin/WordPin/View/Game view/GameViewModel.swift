@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import UIKit
 
 class GameViewModel: ObservableObject {
     /// Display of the words will always be uppercased, however, they are fetched and saved as lowercased.
@@ -18,18 +19,46 @@ class GameViewModel: ObservableObject {
     @Published var word: String
     @Published var wordsCount = 0
     @Published var matchMap: [Bool]
+    @Published var input: String
+
+    static let idealFont: UIFont.TextStyle = .largeTitle
 
     init(_ word: String? = nil) {
         self.word = word ?? ""
         self.matchMap = Array(repeating: false, count: word?.count ?? 0)
+        self.input = String(repeating: ".", count: word?.count ?? 0)
 
         if word == nil {
             Task(priority: .background) { [weak self] in
                 if let newWord = try? await URLTask.shared.getNewWord().first {
                     self?.word = newWord
                     self?.matchMap = Array(repeating: false, count: newWord.count)
+                    self?.input = String(repeating: ".", count: newWord.count)
                 }
             }
+        }
+    }
+
+    func updateInput(_ newValue: Character?) {
+//        if let newValue = newValue, newValue.isLetter, input.count < word.count {
+//            input += String(newValue)
+//        } else if newValue == "⌫", input.count > 0 {
+//            input.remove(at: input.index(before: input.endIndex))
+//        } else if newValue == "⏎", input.count == word.count {
+//            submit(input)
+//            input = nil
+//        }
+        if let newValue = newValue, newValue.isLetter, let spaceIndex = input.firstIndex(of: ".") {
+            input.replaceSubrange(spaceIndex..<input.index(after: spaceIndex), with: [newValue])
+        } else if newValue == "⌫" {
+            if let spaceIndex = input.firstIndex(of: "."), spaceIndex != input.startIndex {
+                input.replaceSubrange(input.index(before: spaceIndex)..<spaceIndex, with: ["."])
+            } else {
+                input.replaceSubrange(input.index(before: input.endIndex)..<input.endIndex, with: ["."])
+            }
+        } else if newValue == "⏎", input.firstIndex(of: ".") == nil {
+            submit(input)
+            input = String(repeating: ".", count: word.count)
         }
     }
 

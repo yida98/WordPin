@@ -28,7 +28,8 @@ struct SubmissionsTable: View {
                             .frame(width: 50)
                     }
                     .onTapGesture {
-                        selectedWord = "ter"
+//                        selectedWord = "superfragaliciousespialidocious"
+                        selectedWord = "lmaooo"
                     }
                 }
             }.sheet(item: $selectedWord) {
