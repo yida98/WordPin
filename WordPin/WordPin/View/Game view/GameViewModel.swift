@@ -21,6 +21,8 @@ class GameViewModel: ObservableObject {
     @Published var matchMap: [Bool]
     @Published var input: String
 
+    var shake = PassthroughSubject<Void, Never>()
+
     static let idealFont: UIFont.TextStyle = .largeTitle
 
     init(_ word: String? = nil) {
@@ -41,7 +43,7 @@ class GameViewModel: ObservableObject {
         }
     }
 
-    func updateInput(_ newValue: Character?) {
+    func updateInput(_ newValue: Character?) -> Completion<String, QuizError> {
 //        if let newValue = newValue, newValue.isLetter, input.count < word.count {
 //            input += String(newValue)
 //        } else if newValue == "⌫", input.count > 0 {
@@ -59,12 +61,14 @@ class GameViewModel: ObservableObject {
                 input.replaceSubrange(input.index(before: input.endIndex)..<input.endIndex, with: ["."])
             }
         } else if newValue == "⏎", input.firstIndex(of: ".") == nil {
-            submit(input)
+            let completion = submit(input)
             input = String(repeating: ".", count: word.count)
+            return .completed(completion)
         }
+        return .incomplete
     }
 
-    func submit(_ entry: String) {
+    func submit(_ entry: String) -> Result<String, QuizError> {
         let validity = valid(entry)
 
         switch validity {
@@ -74,15 +78,18 @@ class GameViewModel: ObservableObject {
 
         case .failure(let failure):
             switch failure {
-            case .sameInput:
+            case .repeatTitle:
                 break
-            case .repeatEntry:
+            case .repeatEntry(_):
                 break
             case .invalidVocabulary:
                 break
             }
         }
+        return validity
     }
+
+    func needShake() { shake.send() }
 
     private func updateMatchMap(with entry: String) {
         for charIdx in 0..<word.count {
@@ -101,16 +108,21 @@ class GameViewModel: ObservableObject {
                 // TODO: Check validity of vocabulary
                 return .success(entry)
             } else {
-                return .failure(.repeatEntry)
+                return .failure(.repeatEntry(comparableInput))
             }
         } else  {
-            return .failure(.sameInput)
+            return .failure(.repeatTitle)
         }
     }
 }
 
 enum QuizError: Error {
-    case sameInput
-    case repeatEntry
+    case repeatTitle
+    case repeatEntry(String)
     case invalidVocabulary
+}
+
+enum Completion<Value, Failure: Error> {
+    case completed(Result<Value, Failure>)
+    case incomplete
 }
