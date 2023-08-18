@@ -15,36 +15,25 @@ struct GameView: View {
         VStack {
             GameClock(count: $viewModel.wordsCount, globalHighScore: 5)
                 .padding(.horizontal, 20)
-            Spacer()
-            VStack(spacing: 60) {
+            Spacer(minLength: 0)
+            VStack(spacing: 40) {
                 VStack(spacing: 20) {
                     // MARK: Title
                     Text(attributedTitle)
                         .textBackground(word: viewModel.word, colors: validationColors)
+                        .frame(maxWidth: gameFrameSize().width)
+                        .fixedSize(horizontal: false, vertical: true)
                     // MARK: Entries
-                    ScrollViewReader { scrollViewProxy in
-                        ScrollView(showsIndicators: false) {
-                            VStack(spacing: 20) {
-                                ForEach(0..<viewModel.words.count, id: \.self) { index in
-                                    Text(attributedText(at: index))
-                                        .textBackground(word: viewModel.word, colors: colors(for: viewModel.words[index]))
-                                        .foregroundColor(.secondaryFont)
-                                }
-                            }
-                        }.frame(width: gameFrameSize().width, height: gameFrameSize().height)
-                        .onChange(of: viewModel.words) { newValue in
-                            withAnimation {
-                                scrollViewProxy.scrollTo(newValue.count - 1, anchor: .bottom)
-                            }
-                        }
-                    }
-                    .frame(width: gameFrameSize().width, height: gameFrameSize().height)
+                    GameInputList(viewModel: viewModel, gameFrameSize: gameFrameSize())
 
                     // MARK: Input box
-                    HStack(spacing: 0) {
-                        Text(attributedInput)
-                            .textBackground(word: viewModel.word, colors: [.gray.opacity(0.15)])
-                    }
+                    Text(attributedInput)
+                        .textBackground(word: viewModel.word, colors: [.gray.opacity(0.15)]) {
+                            Text(String(describing: viewModel.wordsCount + 1))
+                                .labelText()
+                        }
+                        .frame(maxWidth: gameFrameSize().width)
+                        .fixedSize(horizontal: false, vertical: true)
                 }.frame(width: gameFrameSize().width)
 
                 // MARK: Keyboard
@@ -54,41 +43,16 @@ struct GameView: View {
                         keyboardInput = nil
                     }
             }
-            Spacer()
-        }.scenePadding(.minimum, edges: .all)
-            .background(Color.background)
+        }
+        .padding(.bottom, 80)
+        .scenePadding(.minimum, edges: .all)
+        .background(Color.background)
     }
     
     private func gameFrameSize() -> CGSize {
         let width = Constant.screenBounds.width - 80
-        let height = Constant.screenBounds.height / 2.5
+        let height = Constant.screenBounds.height / 3.5
         return CGSize(width: width, height: height)
-    }
-    
-    private var letterSpacing: CGFloat {
-        if viewModel.word.count < 12 {
-            return 4
-        } else if viewModel.word.count < 20 {
-            return 2
-        } else {
-             return 1
-        }
-    }
-
-    private var textTracking: CGFloat {
-        var multiplier: CGFloat
-        if viewModel.word.count < 12 {
-            multiplier = 4
-        } else if viewModel.word.count < 20 {
-            multiplier = 2
-        } else {
-            multiplier = 1
-        }
-        return letterSpacing * multiplier
-    }
-
-    private var cornerRadius: CGFloat {
-        4.0
     }
 
     private var attributedInput: AttributedString {
@@ -123,34 +87,8 @@ struct GameView: View {
         return title
     }
 
-    func attributedText(at index: Int) -> AttributedString {
-        guard index < viewModel.words.count else { return AttributedString() }
-
-        var text = AttributedString(viewModel.words[index].uppercased())
-        let originalWord = viewModel.word.uppercased()
-        for charIdx in 0..<text.characters.count {
-            let currentIndex = text.characters.index(text.startIndex, offsetBy: charIdx)
-            if originalWord[charIdx] == text.characters[currentIndex] {
-//                text[currentIndex..<text.characters.index(after: currentIndex)].font = UIFont.monospaced(size: .largeTitle, emphasis: .bold)
-                text[currentIndex..<text.characters.index(after: currentIndex)].foregroundColor = .jade
-            }
-        }
-
-        return text
-    }
-
     private var validationColors: [Color] {
         viewModel.matchMap.map { $0 ? .success.opacity(0.65) : .failure.opacity(0.65) }
-    }
-
-    private func colors(for word: String) -> [Color] {
-        var colors = Array(repeating: Color.gray.opacity(0.05), count: word.count)
-        for (index, value) in word.enumerated() {
-            if value.lowercased() == viewModel.word[index].lowercased() && viewModel.matchMap[index] {
-                colors[index] = .success.opacity(0.65)
-            }
-        }
-        return colors
     }
 
     private var completed: Bool {
@@ -179,19 +117,31 @@ struct GameInputText: ViewModifier {
     }
 }
 
-struct TextBackground: ViewModifier {
+struct TextBackground<Label: View>: ViewModifier {
     let word: String
     let colors: [Color]
+    let label: () -> Label
 
-    init(word: String, colors: [Color]) {
+    init(word: String, colors: [Color], label: @escaping () -> Label) {
         self.word = word
         self.colors = colors
+        self.label = label
     }
 
     func body(content: Content) -> some View {
         content
             .gameInputText(tracking: tracking)
-            .background(ContiguousRectangles(count: word.count, spacing: tracking - padding, cornerRadius: cornerRadius, colors: colors))
+            .background(
+                GeometryReader { proxy in
+                    ContiguousRectangles(count: word.count, spacing: tracking - padding, cornerRadius: cornerRadius, colors: colors)
+                        .overlay(
+                            VStack {
+                                label()
+                                Spacer(minLength: 0)
+                            }
+                                .offset(x: -(proxy.size.width/2) - 10)
+                        )
+                })
     }
 
     var textSize: CGSize {
@@ -201,15 +151,15 @@ struct TextBackground: ViewModifier {
     }
 
     var padding: CGFloat {
-        estimatedTrueWidth * 0.1
+        estimatedTrueWidth * 0.35
     }
 
     var cornerRadius: CGFloat {
-        estimatedTrueWidth * 0.2
+        estimatedTrueWidth * 0.3
     }
 
     var tracking: CGFloat {
-        estimatedTrueWidth * 0.2
+        estimatedTrueWidth * 0.45
     }
 
     var estimatedTrueWidth: CGFloat {
@@ -234,7 +184,13 @@ extension View {
         modifier(GameInputText(size: size, tracking: tracking))
     }
 
-    func textBackground(word: String, colors: [Color]) -> some View {
-        modifier(TextBackground(word: word, colors: colors))
+    func labelText() -> some View {
+        self
+            .font(.monospaced(size: .caption1))
+            .foregroundColor(.jade.opacity(0.5))
+    }
+
+    func textBackground<Label: View>(word: String, colors: [Color], label: @escaping () -> Label = { EmptyView() }) -> some View {
+        modifier(TextBackground(word: word, colors: colors, label: label))
     }
 }

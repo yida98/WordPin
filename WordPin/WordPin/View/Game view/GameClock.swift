@@ -39,7 +39,7 @@ struct GameClock: View {
             .neumorphicScreen {
                 RoundedRectangle(cornerRadius: 10)
             }
-            .fixedSize()
+            .fixedSize(horizontal: false, vertical: true)
         }
     }
 

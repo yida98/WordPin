@@ -29,7 +29,7 @@ struct SubmissionsTable: View {
                     }
                     .onTapGesture {
 //                        selectedWord = "superfragaliciousespialidocious"
-                        selectedWord = "lmaooo"
+                        selectedWord = "lo"
                     }
                 }
             }.sheet(item: $selectedWord) {
