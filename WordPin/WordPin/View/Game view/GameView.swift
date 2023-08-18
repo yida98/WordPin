@@ -131,6 +131,7 @@ struct TextBackground<Label: View>: ViewModifier {
     func body(content: Content) -> some View {
         content
             .gameInputText(tracking: tracking)
+            .padding(.vertical, verticalPadding)
             .background(
                 GeometryReader { proxy in
                     ContiguousRectangles(count: word.count, spacing: tracking - padding, cornerRadius: cornerRadius, colors: colors)
@@ -151,7 +152,7 @@ struct TextBackground<Label: View>: ViewModifier {
     }
 
     var padding: CGFloat {
-        estimatedTrueWidth * 0.35
+        estimatedTrueWidth * 0.45
     }
 
     var cornerRadius: CGFloat {
@@ -159,7 +160,11 @@ struct TextBackground<Label: View>: ViewModifier {
     }
 
     var tracking: CGFloat {
-        estimatedTrueWidth * 0.45
+        (estimatedTrueWidth * 1.85) / UIScreen.main.scale
+    }
+
+    var verticalPadding: CGFloat {
+        estimatedTrueHeight * 0.05
     }
 
     var estimatedTrueWidth: CGFloat {
@@ -172,6 +177,18 @@ struct TextBackground<Label: View>: ViewModifier {
         }
 
         return textSize.width * scale
+    }
+
+    var estimatedTrueHeight: CGFloat {
+        let fullLength = CGFloat(word.count) * textSize.width
+        let maxWidth = Constant.screenBounds.width - 80
+        var scale: CGFloat = 1
+
+        if fullLength > maxWidth {
+            scale = maxWidth / fullLength
+        }
+
+        return textSize.height * scale
     }
 }
 

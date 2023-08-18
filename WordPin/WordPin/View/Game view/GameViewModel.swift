@@ -29,11 +29,13 @@ class GameViewModel: ObservableObject {
         self.input = String(repeating: ".", count: word?.count ?? 0)
 
         if word == nil {
-            Task(priority: .background) { [weak self] in
+            Task { [weak self] in
                 if let newWord = try? await URLTask.shared.getNewWord().first {
-                    self?.word = newWord
-                    self?.matchMap = Array(repeating: false, count: newWord.count)
-                    self?.input = String(repeating: ".", count: newWord.count)
+                    await MainActor.run { [weak self] in
+                        self?.word = newWord
+                        self?.matchMap = Array(repeating: false, count: newWord.count)
+                        self?.input = String(repeating: ".", count: newWord.count)
+                    }
                 }
             }
         }

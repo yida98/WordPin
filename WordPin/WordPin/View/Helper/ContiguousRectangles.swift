@@ -32,7 +32,7 @@ struct ContiguousRectangles: View {
                             .fill(color(at: index))
                     }
                 }
-                .frame(width: geometryProxy.size.width - spacing)
+                .frame(width: max(geometryProxy.size.width - spacing, 0))
                 Spacer(minLength: 0)
             }
             .frame(width: geometryProxy.size.width)

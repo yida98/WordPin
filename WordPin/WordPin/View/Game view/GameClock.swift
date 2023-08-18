@@ -36,9 +36,14 @@ struct GameClock: View {
             }
             .padding(5)
             .padding(.horizontal, 4)
-            .neumorphicScreen {
+            .background(
                 RoundedRectangle(cornerRadius: 10)
-            }
+                    .stroke(Color.gray.opacity(0.3), lineWidth: 3)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.gray.opacity(0.1))
+                    )
+            )
             .fixedSize(horizontal: false, vertical: true)
         }
     }

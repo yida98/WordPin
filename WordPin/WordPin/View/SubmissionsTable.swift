@@ -28,7 +28,7 @@ struct SubmissionsTable: View {
                             .frame(width: 50)
                     }
                     .onTapGesture {
-//                        selectedWord = "superfragaliciousespialidocious"
+                        selectedWord = "superfragaliciousespialidocious"
                         selectedWord = "lo"
                     }
                 }
