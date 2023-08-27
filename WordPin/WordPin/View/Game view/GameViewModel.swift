@@ -63,7 +63,9 @@ class GameViewModel: ObservableObject {
             }
         } else if newValue == "⏎", input.firstIndex(of: ".") == nil {
             let completion = submit(input)
-            input = String(repeating: ".", count: word.count)
+            if case .success(_) = completion {
+                input = String(repeating: ".", count: word.count)
+            }
             return .completed(completion)
         }
         return .incomplete
