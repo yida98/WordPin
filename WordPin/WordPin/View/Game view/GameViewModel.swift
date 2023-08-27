@@ -20,6 +20,7 @@ class GameViewModel: ObservableObject {
     @Published var wordsCount = 0
     @Published var matchMap: [Bool]
     @Published var input: String
+    @Published var gameFinished: Bool = false
 
     var shake = PassthroughSubject<Void, Never>()
 
@@ -96,6 +97,9 @@ class GameViewModel: ObservableObject {
             if word[charIdx].lowercased() == entry[charIdx].lowercased() {
                 matchMap[charIdx].toggle()
             }
+        }
+        if matchMap.reduce(true, { $0 && $1 }) {
+            gameFinished = true
         }
     }
 

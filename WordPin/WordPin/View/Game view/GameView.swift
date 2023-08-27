@@ -9,106 +9,45 @@ import SwiftUI
 
 struct GameView: View {
     @ObservedObject var viewModel: GameViewModel
-    @State private var keyboardInput: Character?
-    @State private var errorMessage: String = " "
-
-    @State private var shouldShake: Bool = false
 
     var body: some View {
-        VStack {
-            GameClock(count: $viewModel.wordsCount, globalHighScore: 5)
-                .padding(.horizontal, 20)
+        HStack {
             Spacer(minLength: 0)
-            VStack(spacing: 40) {
+            VStack {
+//                GameClock(count: $viewModel.wordsCount, globalHighScore: 5)
+//                    .padding(.horizontal, 20)
+                Spacer(minLength: 0)
                 VStack(spacing: 20) {
                     // MARK: Title
                     Text(attributedTitle)
                         .textBackground(word: viewModel.word, colors: validationColors)
                         .frame(maxWidth: gameFrameSize().width)
-                        .fixedSize(horizontal: false, vertical: true)
+                        .drawingGroup()
                     // MARK: Entries
                     GameInputList(viewModel: viewModel, gameFrameSize: gameFrameSize())
-
-                    // MARK: Input box
-                    VStack {
-                        Text(attributedInput)
-                            .textBackground(word: viewModel.word, colors: [.gray.opacity(0.15)]) {
-                                Text(String(describing: viewModel.wordsCount + 1))
-                                    .labelText()
-                            }
-                            .frame(maxWidth: gameFrameSize().width)
-                            .fixedSize(horizontal: false, vertical: true)
-                            .shakeAnimation($shouldShake, sink: viewModel.shake)
-                        Text(errorMessage)
-                            .font(.primary(size: .caption2, emphasis: .italic))
-                            .foregroundColor(.tertiaryFont)
-                            .onChange(of: errorMessage) { newValue in
-                                if newValue != " " {
-                                    withAnimation(.easeOut(duration: 3)) {
-                                        errorMessage = " "
-                                    }
-                                }
-                            }
+                }
+                Group {
+                    if viewModel.gameFinished {
+                        GameResult(viewModel: viewModel)
+                            .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
+                    } else {
+                        GameFunctionView(viewModel: viewModel, gameFrameSize: gameFrameSize())
+                            .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
                     }
-                }.frame(width: gameFrameSize().width)
-
-                // MARK: Keyboard
-                GameKeyboard(key: $keyboardInput)
-                    .onChange(of: keyboardInput) { newValue in
-                        let competion = viewModel.updateInput(newValue)
-                        switch competion {
-                        case .completed(let result):
-                            switch result {
-                            case .success(_):
-                                // TODO: Do something
-                                break
-                            case .failure(let error):
-                                withAnimation {
-                                    shouldShake.toggle()
-                                }
-                                switch error {
-                                case .repeatTitle:
-                                    errorMessage = "Cannot repeat target word"
-                                case .invalidVocabulary:
-                                    errorMessage = "Invalid"
-                                case .repeatEntry(let word):
-                                    errorMessage = "Repeating \"\(word)\""
-                                }
-                            }
-                        case .incomplete:
-                            // TODO: Do something
-                            break
-                        }
-                        keyboardInput = nil
-                    }
+                }
             }
+            Spacer(minLength: 0)
         }
         .padding(.bottom, 80)
         .scenePadding(.minimum, edges: .all)
         .background(Color.background)
+        .animation(.linear, value: viewModel.gameFinished)
     }
-    
+
     private func gameFrameSize() -> CGSize {
         let width = Constant.screenBounds.width - 80
         let height = Constant.screenBounds.height / 3.5
         return CGSize(width: width, height: height)
-    }
-
-    private var attributedInput: AttributedString {
-        var title = AttributedString(viewModel.input.uppercased())
-
-        for (ind, c) in title.characters.enumerated() {
-            let currentIndex = title.characters.index(title.characters.startIndex, offsetBy: ind)
-            if ind < viewModel.input.count{
-                if c == "." {
-                    title[currentIndex..<title.characters.index(after: currentIndex)].foregroundColor = .clear
-                } else {
-                    title[currentIndex..<title.characters.index(after: currentIndex)].foregroundColor = .jade
-                }
-            }
-        }
-
-        return title
     }
 
     private var attributedTitle: AttributedString {
@@ -128,10 +67,6 @@ struct GameView: View {
 
     private var validationColors: [Color] {
         viewModel.matchMap.map { $0 ? .success.opacity(0.65) : .failure.opacity(0.65) }
-    }
-
-    private var completed: Bool {
-        viewModel.matchMap.reduce(true) { return $0 && $1 }
     }
 }
 
