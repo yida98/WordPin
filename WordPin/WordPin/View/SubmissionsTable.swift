@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct SubmissionsTable: View {
+    @ObservedObject var viewModel: WordCollectionViewModel
     @State private var selectedWord: String?
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 16) {
-                ForEach(0..<10) { i in
+                ForEach(viewModel.wordList.indices, id: \.self) { index in
                     HStack {
-                        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+                        Text(viewModel.wordList[index].word ?? "NULL")
                             .gameText()
                         Spacer()
                         Text("7752")
@@ -45,12 +46,6 @@ extension String: Identifiable {
     public var id: String { self }
 }
 
-struct SubmissionsTable_Previews: PreviewProvider {
-    static var previews: some View {
-        SubmissionsTable()
-    }
-}
-
 extension Text {
     func gameText(_ size: UIFont.TextStyle = .title3) -> some View {
         modifier(GameText(size: size))
@@ -62,8 +57,7 @@ struct GameText: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .textShadow()
-            .font(.secondaryFont(size: size))
+            .font(.monospaced(size: size))
             .foregroundColor(.primaryFont)
     }
 }

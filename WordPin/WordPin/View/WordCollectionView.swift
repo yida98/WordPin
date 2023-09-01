@@ -22,20 +22,17 @@ struct WordCollectionView: View {
                     // Heading banner
                     HStack {
                         Text("Word")
-                            .textShadow()
-                            .font(.digitalFont(size: .headline))
+                            .font(.secondaryFont(size: .headline))
                             .foregroundColor(.secondaryFont)
                         Spacer()
                         Image(systemName: "star.fill")
-                            .textShadow()
                             .frame(width: scoreWidth)
                             .foregroundColor(.secondaryFont)
                         Image(systemName: "globe.americas.fill")
-                            .textShadow()
                             .frame(width: scoreWidth)
                             .foregroundColor(.secondaryFont)
                     }
-                    SubmissionsTable()
+                    SubmissionsTable(viewModel: viewModel)
                 }.padding(.top, 6)
                 HStack {
                     Spacer()
@@ -63,8 +60,14 @@ struct WordCollectionView: View {
         .background(Color.background)
         .sheet(isPresented: $viewModel.isPresentingGame) {
             // TODO: On dismiss
+            viewModel.finishedGame()
         } content: {
-            GameView(viewModel: viewModel.makeNewGame())
+            if let currentGame = viewModel.currentGame {
+                GameView(viewModel: currentGame)
+            } else {
+                // TODO: Error page
+                EmptyView()
+            }
         }
     }
 }

@@ -26,33 +26,13 @@ class GameViewModel: ObservableObject {
 
     static let idealFont: UIFont.TextStyle = .largeTitle
 
-    init(_ word: String? = nil) {
-        self.word = word ?? ""
-        self.matchMap = Array(repeating: false, count: word?.count ?? 0)
-        self.input = String(repeating: ".", count: word?.count ?? 0)
-
-        if word == nil {
-            Task { [weak self] in
-                if let newWord = try? await URLTask.shared.getNewWord().first {
-                    await MainActor.run { [weak self] in
-                        self?.word = newWord
-                        self?.matchMap = Array(repeating: false, count: newWord.count)
-                        self?.input = String(repeating: ".", count: newWord.count)
-                    }
-                }
-            }
-        }
+    init(_ word: String) {
+        self.word = word
+        self.matchMap = Array(repeating: false, count: word.count)
+        self.input = String(repeating: ".", count: word.count)
     }
 
     func updateInput(_ newValue: Character?) -> Completion<String, QuizError> {
-//        if let newValue = newValue, newValue.isLetter, input.count < word.count {
-//            input += String(newValue)
-//        } else if newValue == "⌫", input.count > 0 {
-//            input.remove(at: input.index(before: input.endIndex))
-//        } else if newValue == "⏎", input.count == word.count {
-//            submit(input)
-//            input = nil
-//        }
         if let newValue = newValue, newValue.isLetter, let spaceIndex = input.firstIndex(of: ".") {
             input.replaceSubrange(spaceIndex..<input.index(after: spaceIndex), with: [newValue])
         } else if newValue == "⌫" {

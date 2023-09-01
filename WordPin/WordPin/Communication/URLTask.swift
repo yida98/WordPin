@@ -14,6 +14,7 @@ class URLTask {
     private init() { }
 
     func getNewWord(length: Int = 0) async throws -> [String] {
+        // TODO: Find valid word
         guard let requestURL = RandomWordAPI.requestURL(length: length) else {
             throw RequestError.InvalidRequestURL
         }
