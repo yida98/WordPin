@@ -8,22 +8,42 @@
 import Foundation
 
 struct SubmissionAPI {
-    private static var urlBase: String = "https://localhost:6060/"
-    private static var route: String = "submissions/"
+    private static var scheme: String = "https"
+    private static var host: String = "localhost"
+    private static var port: Int = 6060
+    private static var route: String = "/submissions"
     
     static func submissionRequestURL(for word_id: String) -> URL? {
-        guard let encodedURL = word_id.lowercased().encodeUrl() else {
+        guard let encodedWord = word_id.lowercased().encodeUrl() else {
             return nil
         }
-        return URL(string: "\(urlBase)\(route)\(encodedURL)")
+        var components = URLComponents()
+        components.scheme = scheme
+        components.host = host
+        components.port = port
+        components.path = route.appending("/\(encodedWord)")
+
+        return components.url
     }
 }
 
 struct RandomWordAPI {
-    private static var urlBase: String = "https://random-word-api.herokuapp.com/"
-    private static var route: String = "word"
+    private static var components: URLComponents = {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "random-word-api.herokuapp.com"
+        components.path = "/word"
+        return components
+    }()
+    private static var scheme: String = "https"
+    private static var host: String = "random-word-api.herokuapp.com"
+    private static var route: String = "/word"
     
     static func requestURL(length: Int = 0) -> URL? {
-        return URL(string: "\(urlBase)\(route)\(length == 0 ? "" : "?length=\(length)")")
+        var urlComponents = RandomWordAPI.components
+        if length > 0 {
+            urlComponents.queryItems = [URLQueryItem(name: "length", value: String(length))]
+        }
+        return urlComponents.url
     }
 }

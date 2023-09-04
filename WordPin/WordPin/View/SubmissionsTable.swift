@@ -16,14 +16,14 @@ struct SubmissionsTable: View {
             VStack(spacing: 16) {
                 ForEach(viewModel.wordList.indices, id: \.self) { index in
                     HStack {
-                        Text(viewModel.wordList[index].word ?? "NULL")
+                        Text(viewModel.wordList[index].submission.word ?? " NULL")
                             .gameText()
                         Spacer()
-                        Text("7752")
+                        Text(viewModel.wordList[index].submission.group?.count == nil ? "NULL" : String(viewModel.wordList[index].submission.group!.count))
                             .gameText()
                             .minimumScaleFactor(0.5)
                             .frame(width: 50)
-                        Text("6862")
+                        Text(globalScore(at: index))
                             .gameText()
                             .minimumScaleFactor(0.5)
                             .frame(width: 50)
@@ -39,6 +39,13 @@ struct SubmissionsTable: View {
                 GameView(viewModel: GameViewModel(value))
             }
         }
+    }
+
+    private func globalScore(at index: Int) -> String {
+        guard let group = viewModel.wordList[index].globalHighScore.group else {
+            return "NULL"
+        }
+        return String(group.count)
     }
 }
 

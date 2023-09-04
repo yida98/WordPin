@@ -104,8 +104,8 @@ class PersistenceController: ObservableObject {
     
     // MARK: - Save
     
-    func save(word: String, group: [String]) {
-        guard let entityObject = submissionEntity else { debugPrint("Could not get submissionEntity"); return }
+    func save(word: String, group: [String]) -> NSManagedObject? {
+        guard let entityObject = submissionEntity else { debugPrint("Could not get submissionEntity"); return nil }
         let context = container.viewContext
         let entity = NSManagedObject(entity: entityObject, insertInto: context)
         
@@ -115,6 +115,8 @@ class PersistenceController: ObservableObject {
         entity.setValue(Date(), forKey: Submission.Keys.timestamp.rawValue)
         
         saveContext()
+
+        return entity
     }
     
     private func saveContext() {
