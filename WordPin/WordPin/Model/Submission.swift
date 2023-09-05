@@ -11,7 +11,7 @@ import CoreData
 @objc(Submission)
 class Submission: NSManagedObject, Codable {
     enum CodingKeys: String, CodingKey {
-        case id, word, group, timestamp
+        case id, word, group, timestamp, displayName
     }
     
     // MARK: - Core Data Managed Object
@@ -19,6 +19,7 @@ class Submission: NSManagedObject, Codable {
     @NSManaged var word: String?
     @NSManaged var group: [String]?
     @NSManaged var timestamp: Date?
+    @NSManaged var displayName: String?
     
     public required convenience init(from decoder: Decoder) throws {
         guard let codingUserInfoKeyManagedObjectContext = CodingUserInfoKey.managedObjectContext,
@@ -34,6 +35,7 @@ class Submission: NSManagedObject, Codable {
         self.word = try container.decode(String.self, forKey: .word)
         self.group = try container.decode([String].self, forKey: .group)
         self.timestamp = try container.decode(Date.self, forKey: .timestamp)
+        self.displayName = try container.decode(String.self, forKey: .displayName)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -42,6 +44,7 @@ class Submission: NSManagedObject, Codable {
         try container.encode(word, forKey: .word)
         try container.encode(group, forKey: .group)
         try container.encode(timestamp, forKey: .timestamp)
+        try container.encode(displayName, forKey: .displayName)
     }
 }
 

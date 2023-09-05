@@ -9,14 +9,18 @@ import SwiftUI
 
 @main
 struct WordPinApp: App {
+    @UIApplicationDelegateAdaptor var applicationDelegate: AppData
     let persistenceController = PersistenceController.shared
     @StateObject var networkMonitor = NetworkMonitor()
+    @StateObject var viewModel = ContentViewModel()
 
     var body: some Scene {
         WindowGroup {
-            WordCollectionView(viewModel: WordCollectionViewModel())
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                .environmentObject(networkMonitor)
+            ContentView(viewModel: viewModel)
+
+//            WordCollectionView(viewModel: WordCollectionViewModel())
+//                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+//                .environmentObject(networkMonitor)
         }
     }
 }

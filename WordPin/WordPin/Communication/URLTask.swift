@@ -85,10 +85,11 @@ class URLTask {
         guard let word = submission.word, let requestURL = SubmissionAPI.submissionRequestURL(for: word) else { return }
         
         let json: [String: Any] = ["id": submission.id?.uuidString as Any,
-                                   "userId": "WA?", // TODO: UserID
+                                   "userId": AppData.userID,
                                    "word": submission.word as Any,
                                    "group": submission.group as Any,
-                                   "timestamp": submission.timestamp as Any]
+                                   "timestamp": submission.timestamp as Any,
+                                   "displayName": submission.displayName as Any]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
         var urlRequest = URLRequest(url: requestURL)

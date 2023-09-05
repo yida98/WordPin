@@ -40,7 +40,6 @@ struct GameView: View {
         }
         .padding(.bottom, 80)
         .scenePadding(.minimum, edges: .all)
-        .background(Color.background)
         .animation(.linear, value: viewModel.gameFinished)
     }
 

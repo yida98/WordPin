@@ -109,10 +109,11 @@ class PersistenceController: ObservableObject {
         let context = container.viewContext
         let entity = NSManagedObject(entity: entityObject, insertInto: context)
         
-        entity.setValue(UUID(), forKey: Submission.Keys.id.rawValue)
-        entity.setValue(group, forKey: Submission.Keys.group.rawValue)
-        entity.setValue(word, forKey: Submission.Keys.word.rawValue)
-        entity.setValue(Date(), forKey: Submission.Keys.timestamp.rawValue)
+        entity.setValue(UUID(), forKey: Submission.CodingKeys.id.rawValue)
+        entity.setValue(group, forKey: Submission.CodingKeys.group.rawValue)
+        entity.setValue(word, forKey: Submission.CodingKeys.word.rawValue)
+        entity.setValue(Date(), forKey: Submission.CodingKeys.timestamp.rawValue)
+        entity.setValue(AppData.shared.displayName, forKey: Submission.CodingKeys.displayName.rawValue)
         
         saveContext()
 
@@ -130,11 +131,5 @@ class PersistenceController: ObservableObject {
             }
         }
         self.objectWillChange.send()
-    }
-}
-
-extension Submission {
-    enum Keys: String {
-        case id, userId, timestamp, word, group
     }
 }
