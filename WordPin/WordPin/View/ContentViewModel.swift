@@ -10,9 +10,11 @@ import Combine
 
 class ContentViewModel: ObservableObject {
     @Published var currentGame: GameViewModel?
+    @Published var displayName: String
     private var localSubmissionsSubscriber = Set<AnyCancellable>()
 
     init() {
+        self.displayName = AppData.shared.displayName
         Task { [weak self] in
             await self?.makeNewGame()
         }
@@ -20,7 +22,9 @@ class ContentViewModel: ObservableObject {
 
     func makeNewGame(_ word: String? = "nil") async -> GameViewModel? {
         if let word = word {
-            self.currentGame = GameViewModel(word)
+            await MainActor.run { [weak self] in
+                self?.currentGame = GameViewModel(word)
+            }
         } else {
             if let newWord = try? await URLTask.shared.getNewWord().first {
                 await MainActor.run { [weak self] in

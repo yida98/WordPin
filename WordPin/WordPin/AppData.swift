@@ -26,5 +26,28 @@ class AppData: NSObject, UIApplicationDelegate, ObservableObject {
         return newID.uuidString
     }()
 
-    var displayName: String = "Placeholder"
+    var displayName: String {
+        let userDefaults = UserDefaults.standard
+        let displayNameKey = "displayName"
+        if let displayName = userDefaults.string(forKey: displayNameKey) {
+            return displayName
+        }
+        let newDisplayName = AppData.generateUsername()
+        userDefaults.set(newDisplayName, forKey: displayNameKey)
+        return newDisplayName
+    }
+
+    func updateDisplayName(_ name: String) {
+        var validName = name
+        if validName.isEmpty {
+            validName = AppData.generateUsername()
+        }
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(validName, forKey: "displayName")
+        self.objectWillChange.send()
+    }
+
+    static func generateUsername() -> String {
+        "User\(Int.random(in: 1000...9999))"
+    }
 }
