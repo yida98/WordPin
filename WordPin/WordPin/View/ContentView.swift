@@ -7,12 +7,20 @@
 
 import SwiftUI
 import CoreData
+import UIKit
 
 struct ContentView: View {
-    @ObservedObject var viewModel: ContentViewModel
+    @EnvironmentObject var viewModel: ContentViewModel
     @EnvironmentObject private var applicationDelegate: AppData
 
     @State private var usernameIsValid: Bool = true
+
+    @State var showingGame: Bool = false
+
+    init() {
+        UIPageControl.appearance().currentPageIndicatorTintColor = UIColor(Color.jade)
+        UIPageControl.appearance().pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.2)
+    }
 
     var body: some View {
         VStack {
@@ -38,22 +46,11 @@ struct ContentView: View {
                     })
                     .fixedSize()
             }
-            if let currentGame = viewModel.currentGame {
-                GameView(viewModel: currentGame)
-            } else {
-                ProgressView()
+            TabView {
+                GameTab(viewModel: viewModel)
+                PlayerAttempts()
             }
-            HStack {
-                Spacer(minLength: 0)
-                Button("Leaderboards") {
-                    // TODO: Leaderboards
-                }
-                Spacer(minLength: 0)
-                Button("Statistics") {
-                    // TODO: Leaderboards
-                }
-                Spacer(minLength: 0)
-            }
+            .tabViewStyle(.page(indexDisplayMode: .always))
         }
         .background(Color.background)
     }

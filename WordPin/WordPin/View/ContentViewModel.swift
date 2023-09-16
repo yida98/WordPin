@@ -46,4 +46,20 @@ class ContentViewModel: ObservableObject {
 //        // TODO: Continue the game until new game
 //        self.currentGame = nil
     }
+
+    func leaderboard() async -> [String] {
+        // Find minimum input (1 number)
+        let results = await URLTask.shared.getSubmissions(for: "dailyword")
+        // All users and their solutions
+//        let record =
+        // All users that match the record and how many unique solutions they have
+//        let users =
+        return []
+    }
+}
+
+struct LeaderboardUser {
+    var userID: String
+    var allSubmissions: [[String]]
+
 }
