@@ -19,5 +19,5 @@ func routes(_ app: Application) throws {
 //        "Posting"
 //    }
 
-    try app.register(collection: TodoController())
+    try app.register(collection: WPServerController())
 }

@@ -17,8 +17,8 @@ public func configure(_ app: Application) async throws {
         tls: .prefer(try .init(configuration: .clientDefault)))
     ), as: .psql)
 
-    app.migrations.add(CreateTodo())
-//    app.migrations.add(CreateHistory())
+    app.migrations.add(CreateSubmission())
+    app.migrations.add(CreateHistory())
 
     app.logger.logLevel = .debug
     app.logger.debug("Configured")

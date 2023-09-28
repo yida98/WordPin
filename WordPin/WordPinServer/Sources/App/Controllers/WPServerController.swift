@@ -1,7 +1,7 @@
 import Fluent
 import Vapor
 
-struct TodoController: RouteCollection {
+struct WPServerController: RouteCollection {
     static let startingDate: Date = Calendar(identifier: .gregorian).date(from: DateComponents(timeZone: .autoupdatingCurrent, year: 2023, month: 9, day: 21)) ?? .now
     static let wordList: [String]? = {
         if let resourcePath = Bundle.module.path(forResource: "wordList", ofType: "txt") {
@@ -30,17 +30,17 @@ struct TodoController: RouteCollection {
         }
     }
 
-    func index(req: Request) async throws -> [Todo] {
-        try await Todo.query(on: req.db).all()
+    func index(req: Request) async throws -> [Submission] {
+        try await Submission.query(on: req.db).all()
     }
 
     func getSubmissions(req: Request) async throws -> String {
         getDailyWord(for: .now) ?? " "
     }
 
-    func getWord(req: Request) async throws -> [Todo] {
+    func getWord(req: Request) async throws -> [Submission] {
         guard let word = req.parameters.get("word") else { return [] }
-        return try await Todo.query(on: req.db)
+        return try await Submission.query(on: req.db)
             .filter(\.$word == word)
             .all()
     }
@@ -60,24 +60,24 @@ struct TodoController: RouteCollection {
         try await DailyWord.query(on: req.db).all()
     }
 
-    func create(req: Request) async throws -> Todo {
-        let todo = try req.content.decode(Todo.self)
-        try await todo.save(on: req.db)
-        return todo
+    func create(req: Request) async throws -> Submission {
+        let submission = try req.content.decode(Submission.self)
+        try await submission.save(on: req.db)
+        return submission
     }
 
     func delete(req: Request) async throws -> HTTPStatus {
-        guard let todo = try await Todo.find(req.parameters.get("todoID"), on: req.db) else {
+        guard let submission = try await Submission.find(req.parameters.get("todoID"), on: req.db) else {
             throw Abort(.notFound)
         }
-        try await todo.delete(on: req.db)
+        try await submission.delete(on: req.db)
         return .noContent
     }
 
     func getDailyWord(for date: Date) -> String? {
-        let wordIndex = Calendar(identifier: .gregorian).numberOfDaysBetween(TodoController.startingDate, and: date)
+        let wordIndex = Calendar(identifier: .gregorian).numberOfDaysBetween(WPServerController.startingDate, and: date)
 
-        guard let wordList = TodoController.wordList, wordIndex < wordList.count else { return nil }
+        guard let wordList = WPServerController.wordList, wordIndex < wordList.count else { return nil }
         return wordList[wordIndex]
     }
 }
