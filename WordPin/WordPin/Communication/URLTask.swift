@@ -13,56 +13,31 @@ class URLTask {
 
     private init() { }
 
-    func getNewWord(length: Int = 0) async throws -> [String] {
-        // TODO: Find valid word
-        guard let requestURL = RandomWordAPI.requestURL(length: length) else {
-            throw RequestError.InvalidRequestURL
-        }
+    func getDailyWord() async throws -> String {
+        guard let requestURL = SubmissionAPI.getDailyWordURL() else { throw RequestError.InvalidRequestURL }
 
         var urlRequest = URLRequest(url: requestURL, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 30.0)
         urlRequest.httpMethod = "GET"
 
-        let (data, _) = try await URLSession.shared.data(for: urlRequest)
-        return try JSONDecoder().decode([String].self, from: data)
-    }
-
-    func getRandomWord(length: Int = 0) -> AnyPublisher<[String], Error> {
-        guard let requestURL = RandomWordAPI.requestURL(length: length) else {
-            return Fail(error: RequestError.InvalidRequestURL).eraseToAnyPublisher()
-        }
-        
-        var urlRequest = URLRequest(url: requestURL, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 30.0)
-        urlRequest.httpMethod = "GET"
-
-        return URLSession.shared.dataTaskPublisher(for: urlRequest)
-            .tryMap { (data: Data, response: URLResponse) in
-                if let response = response as? HTTPURLResponse, response.statusCode == HTTPStatusCode.OK.rawValue {
-                    do {
-                        let decoder = JSONDecoder()
-                        let newWord = try decoder.decode([String].self, from: data)
-                        return newWord
-                    } catch let error {
-                        debugPrint(error.localizedDescription)
-                        throw CodingError.JSONDecodingError
-                    }
-                } else {
-                    throw RequestError.InternalServerError
-                }
+        if let (data, response) = try? await URLSession.shared.data(for: urlRequest),
+            let response = response as? HTTPURLResponse, response.statusCode == HTTPStatusCode.OK.rawValue {
+            do {
+                let dailyWord = try JSONDecoder().decode(String.self, from: data)
+                return dailyWord
+            } catch let error {
+                throw error
             }
-            .eraseToAnyPublisher()
+        }
+        throw RequestError.InternalServerError
     }
 
-    func getAllSubmissions() async -> Result<[Submission], Error> {
-        return await getSubmissionRequest(for: "")
+    func getSubmissions(for word: String) async throws -> [Submission] {
+        try await getSubmissionRequest(for: word)
     }
 
-    func getSubmissions(for word: String) async -> Result<[Submission], Error> {
-        return await getSubmissionRequest(for: word)
-    }
-
-    private func getSubmissionRequest(for word: String) async -> Result<[Submission], Error> {
+    private func getSubmissionRequest(for word: String) async throws -> [Submission] {
         guard let requestURL = SubmissionAPI.submissionRequestURL(for: word) else {
-            return .failure(RequestError.InvalidRequestURL)
+            throw RequestError.InvalidRequestURL
         }
         var urlRequest = URLRequest(url: requestURL, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 30.0)
         urlRequest.httpMethod = "GET"
@@ -72,22 +47,22 @@ class URLTask {
             response.statusCode == HTTPStatusCode.OK.rawValue {
             do {
                 let submission = try JSONDecoder().decode([Submission].self, from: data)
-                return .success(submission)
+                return submission
             } catch let error {
-                return .failure(error)
+                throw error
             }
-        } else {
-            return .failure(RequestError.InternalServerError)
         }
+        throw RequestError.InternalServerError
     }
     
     func postSubmission(_ submission: Submission) {
-        guard let word = submission.word, let requestURL = SubmissionAPI.submissionRequestURL(for: word) else { return }
+        guard let requestURL = SubmissionAPI.submissionRequestURL(for: "") else { return }
         
         let json: [String: Any] = ["id": submission.id?.uuidString as Any,
                                    "userId": AppData.userID,
                                    "word": submission.word as Any,
                                    "group": submission.group as Any,
+                                   "groupCount": submission.groupCount as Any,
                                    "timestamp": submission.timestamp as Any,
                                    "displayName": submission.displayName as Any]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
@@ -98,12 +73,62 @@ class URLTask {
         
         URLSession.shared.dataTask(with: urlRequest)
     }
+
+    func nukeSubmissions() {
+        guard let requestURL = SubmissionAPI.nukeSubmissionsURL() else { return }
+
+        var urlRequest = URLRequest(url: requestURL)
+        urlRequest.httpMethod = "DELETE"
+
+        URLSession.shared.dataTask(with: urlRequest)
+    }
     
     enum RequestError: Error {
         case InvalidRequestURL
         case InternalServerError
         case NotFound
     }
+
+    /* Feature under reevaluation
+        func getNewWord(length: Int = 0) async throws -> [String] {
+            // TODO: Find valid word
+            guard let requestURL = RandomWordAPI.requestURL(length: length) else {
+                throw RequestError.InvalidRequestURL
+            }
+
+            var urlRequest = URLRequest(url: requestURL, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 30.0)
+            urlRequest.httpMethod = "GET"
+
+            let (data, _) = try await URLSession.shared.data(for: urlRequest)
+            return try JSONDecoder().decode([String].self, from: data)
+        }
+
+        func getRandomWord(length: Int = 0) -> AnyPublisher<[String], Error> {
+            guard let requestURL = RandomWordAPI.requestURL(length: length) else {
+                return Fail(error: RequestError.InvalidRequestURL).eraseToAnyPublisher()
+            }
+
+            var urlRequest = URLRequest(url: requestURL, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 30.0)
+            urlRequest.httpMethod = "GET"
+
+            return URLSession.shared.dataTaskPublisher(for: urlRequest)
+                .tryMap { (data: Data, response: URLResponse) in
+                    if let response = response as? HTTPURLResponse, response.statusCode == HTTPStatusCode.OK.rawValue {
+                        do {
+                            let decoder = JSONDecoder()
+                            let newWord = try decoder.decode([String].self, from: data)
+                            return newWord
+                        } catch let error {
+                            debugPrint(error.localizedDescription)
+                            throw CodingError.JSONDecodingError
+                        }
+                    } else {
+                        throw RequestError.InternalServerError
+                    }
+                }
+                .eraseToAnyPublisher()
+        }
+    */
 }
 
 extension String {

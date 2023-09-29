@@ -2,7 +2,7 @@ import Fluent
 import Vapor
 
 struct WPServerController: RouteCollection {
-    static let startingDate: Date = Calendar(identifier: .gregorian).date(from: DateComponents(timeZone: .autoupdatingCurrent, year: 2023, month: 9, day: 21)) ?? .now
+    static let startingDate: Date = Calendar(identifier: .gregorian).date(from: DateComponents(timeZone: .autoupdatingCurrent, year: 2023, month: 9, day: 21)) ?? Date()
     static let wordList: [String]? = {
         if let resourcePath = Bundle.module.path(forResource: "wordList", ofType: "txt") {
             do {
@@ -20,6 +20,7 @@ struct WPServerController: RouteCollection {
         routes.get(use: index)
         routes.get("dailyWord", use: getDailyWord)
         routes.get("history", use: getDailyWords)
+        routes.delete("erase", use: nuke)
 
         let submissions = routes.grouped("submissions")
         submissions.get(use: getSubmissions)
@@ -30,34 +31,44 @@ struct WPServerController: RouteCollection {
         }
     }
 
-    func index(req: Request) async throws -> [Submission] {
-        try await Submission.query(on: req.db).all()
+    /// returns `[Submission]` encoded by `JSON`
+    func index(req: Request) async throws -> Data {
+        try JSONEncoder().encode(try await Submission.query(on: req.db).all())
     }
 
-    func getSubmissions(req: Request) async throws -> String {
-        getDailyWord(for: .now) ?? " "
+    /// returns `[Submission]` encoded by `JSON`
+    func getSubmissions(req: Request) async throws -> Data {
+        try JSONEncoder().encode(getDailyWord(for: Date()))
     }
 
-    func getWord(req: Request) async throws -> [Submission] {
-        guard let word = req.parameters.get("word") else { return [] }
-        return try await Submission.query(on: req.db)
+    /// returns `[Submission]` encoded by `JSON`
+    func getWord(req: Request) async throws -> Data {
+        guard let word = req.parameters.get("word"),
+                let minimum = try? await Submission.query(on: req.db).filter(\.$word == word).min(\.$groupCount) else {
+            return try JSONEncoder().encode([Submission]())
+        }
+        let submissions = try await Submission.query(on: req.db)
             .filter(\.$word == word)
+            .filter(\.$groupCount == minimum)
             .all()
+        return try JSONEncoder().encode(submissions)
     }
 
-    func getDailyWord(req: Request) async throws -> String {
-        let dailyWord = getDailyWord(for: .now)
+    /// returns `String` encoded by `JSON`
+    func getDailyWord(req: Request) async throws -> Data {
+        let dailyWord = getDailyWord(for: Date())
         Task(priority: .background) {
             if let todaysWord = dailyWord {
-                let dailyWord = DailyWord(dailyWord: todaysWord, date: .now)
+                let dailyWord = DailyWord(dailyWord: todaysWord, date: Date())
                 try await dailyWord.save(on: req.db)
             }
         }
-        return dailyWord ?? " "
+        return try JSONEncoder().encode(dailyWord)
     }
 
-    func getDailyWords(req: Request) async throws -> [DailyWord] {
-        try await DailyWord.query(on: req.db).all()
+    /// returns `[DailyWord]` encoded by `JSON`
+    func getDailyWords(req: Request) async throws -> Data {
+        try JSONEncoder().encode(try await DailyWord.query(on: req.db).all())
     }
 
     func create(req: Request) async throws -> Submission {
@@ -71,6 +82,11 @@ struct WPServerController: RouteCollection {
             throw Abort(.notFound)
         }
         try await submission.delete(on: req.db)
+        return .noContent
+    }
+
+    func nuke(req: Request) async throws -> HTTPStatus {
+        try await Submission.query(on: req.db).delete()
         return .noContent
     }
 
@@ -89,5 +105,14 @@ extension Calendar {
         let numberOfDays = dateComponents([.day], from: fromDate, to: toDate)
 
         return numberOfDays.day!
+    }
+}
+
+extension Data: AsyncResponseEncodable {
+    public func encodeResponse(for request: Vapor.Request) async throws -> Vapor.Response {
+        var response = Response(status: .ok)
+        response.headers.contentType = .plainText
+        response.body = .init(data: self)
+        return response
     }
 }

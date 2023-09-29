@@ -48,7 +48,7 @@ class WordCollectionViewModel: ObservableObject {
         if let word = word {
             self.currentGame = GameViewModel(word)
         } else {
-            if let newWord = try? await URLTask.shared.getNewWord().first {
+            if let newWord = try? await URLTask.shared.getDailyWord() {
                 self.currentGame = GameViewModel(newWord)
             }
         }
@@ -79,7 +79,7 @@ class AggregatedSubmission {
         self.globalHighScore = submission
 
         Task(priority: .background) {
-            if let word = submission.word, case .success(let submissions) = await URLTask.shared.getSubmissions(for: word), let firstSubmission = submissions.first {
+            if let word = submission.word, let submissions = try? await URLTask.shared.getSubmissions(for: word), let firstSubmission = submissions.first {
                 let bestSubmission = submissions.reduce(firstSubmission) { partialResult, newValue in
                     if let lhsGroup = partialResult.group, let rhsGroup = newValue.group {
                         return lhsGroup.count < rhsGroup.count ? partialResult : newValue

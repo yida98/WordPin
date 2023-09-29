@@ -8,10 +8,9 @@
 import Foundation
 
 struct SubmissionAPI {
-    private static var scheme: String = "https"
+    private static var scheme: String = "http"
     private static var host: String = "localhost"
-    private static var port: Int = 6060
-    private static var route: String = "/submissions"
+    private static var port: Int = 8080
     
     static func submissionRequestURL(for word_id: String) -> URL? {
         guard let encodedWord = word_id.lowercased().encodeUrl() else {
@@ -21,9 +20,35 @@ struct SubmissionAPI {
         components.scheme = scheme
         components.host = host
         components.port = port
-        components.path = route.appending("/\(encodedWord)")
+        components.path = Route.submission.rawValue.appending("/\(encodedWord)")
 
         return components.url
+    }
+
+    static func getDailyWordURL() -> URL? {
+        var components = URLComponents()
+        components.scheme = scheme
+        components.host = host
+        components.port = port
+        components.path = Route.dailyWord.rawValue
+
+        return components.url
+    }
+
+    static func nukeSubmissionsURL() -> URL? {
+        var components = URLComponents()
+        components.scheme = scheme
+        components.host = host
+        components.port = port
+        components.path = Route.erase.rawValue
+
+        return components.url
+    }
+
+    enum Route: String {
+        case submission = "/submission"
+        case dailyWord = "/dailyWord"
+        case erase = "/erase"
     }
 }
 

@@ -20,13 +20,13 @@ class ContentViewModel: ObservableObject {
         }
     }
 
-    func makeNewGame(_ word: String? = "nil") async -> GameViewModel? {
+    func makeNewGame(_ word: String? = nil) async -> GameViewModel? {
         if let word = word {
             await MainActor.run { [weak self] in
                 self?.currentGame = GameViewModel(word)
             }
         } else {
-            if let newWord = try? await URLTask.shared.getNewWord().first {
+            if let newWord = try? await URLTask.shared.getDailyWord() {
                 await MainActor.run { [weak self] in
                     self?.currentGame = GameViewModel(newWord)
                 }
@@ -47,14 +47,16 @@ class ContentViewModel: ObservableObject {
 //        self.currentGame = nil
     }
 
-    func leaderboard() async -> [String] {
+    func leaderboard() async -> [Submission]? {
         // Find minimum input (1 number)
-        let results = await URLTask.shared.getSubmissions(for: "dailyword")
+        if let dailyWord = currentGame?.word {
+            return try? await URLTask.shared.getSubmissions(for: dailyWord)
+        }
         // All users and their solutions
 //        let record =
         // All users that match the record and how many unique solutions they have
 //        let users =
-        return []
+        return nil
     }
 }
 

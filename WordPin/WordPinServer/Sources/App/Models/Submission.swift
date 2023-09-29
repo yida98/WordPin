@@ -19,17 +19,21 @@ final class Submission: Model, Content {
     @Field(key: "group")
     var group: [String]
 
+    @Field(key: "group_count")
+    var groupCount: Int
+
     @Field(key: "display_name")
     var displayName: String
 
     init() { }
 
-    init(id: UUID? = nil, userId: String, word: String, timestamp: Date?, group: [String], displayName: String) {
+    init(id: UUID? = nil, userId: String, word: String, timestamp: Date?, group: [String], groupCount: Int, displayName: String) {
         self.id = id
         self.userId = userId
         self.word = word
         self.timestamp = timestamp
         self.group = group
+        self.groupCount = groupCount
         self.displayName = displayName
     }
 }

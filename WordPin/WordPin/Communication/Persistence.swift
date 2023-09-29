@@ -111,6 +111,7 @@ class PersistenceController: ObservableObject {
         
         entity.setValue(UUID(), forKey: Submission.CodingKeys.id.rawValue)
         entity.setValue(group, forKey: Submission.CodingKeys.group.rawValue)
+        entity.setValue(group.count, forKey: Submission.CodingKeys.groupCount.rawValue)
         entity.setValue(word, forKey: Submission.CodingKeys.word.rawValue)
         entity.setValue(Date(), forKey: Submission.CodingKeys.timestamp.rawValue)
         entity.setValue(AppData.shared.displayName, forKey: Submission.CodingKeys.displayName.rawValue)
