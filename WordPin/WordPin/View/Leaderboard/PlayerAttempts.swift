@@ -9,14 +9,16 @@ import SwiftUI
 
 struct PlayerAttempts: View {
     @StateObject var viewModel: LeaderboardViewModel
-    @State var fetching: Bool = true
 
     init(word: String?, displayName: String) {
-        self._viewModel = StateObject(wrappedValue: LeaderboardViewModel(word: word, displayName: displayName))
+        self._viewModel = StateObject(wrappedValue: LeaderboardViewModel(word: word))
     }
 
     var body: some View {
         VStack {
+            Text("Leaderboard")
+                .font(.primary(size: .title1, emphasis: .bold))
+                .foregroundColor(.primaryFont)
             Group {
                 if let leaderboard = viewModel.leaderboard, leaderboard.count != 0 {
                     Text(String(leaderboard.first!.groupCount))
@@ -32,8 +34,7 @@ struct PlayerAttempts: View {
                     List {
                         Text("item")
                         ForEach(leaderboard.indices, id: \.self) { leaderboardIndex in
-                            let username = leaderboard[leaderboardIndex].displayName ?? "unknown"
-                            LeaderboardCell(username: username, uniqueEntries: leaderboardIndex)
+                            LeaderboardCell(submission: leaderboard[leaderboardIndex])
                         }
                     }
                     .background(.clear)
@@ -43,33 +44,25 @@ struct PlayerAttempts: View {
                     }
                 } else {
                     VStack {
-                        Spacer()
-                        if fetching {
+                        if viewModel.updatingLeaderboard {
                             ProgressView {
-                                Text("Fetching leaderboard...")
+                                Text("Loading...")
+                                    .font(.secondaryFont(size: .headline))
                             }
-                            .onAppear {
-                                Task(priority: .background) {
-                                    try? await Task.sleep(nanoseconds: UInt64(4) * NSEC_PER_SEC)
-                                    await MainActor.run {
-                                        fetching = false
-                                    }
-                                }
-                            }
+                            .foregroundColor(.secondaryFont)
                             .frame(height: 100)
                         } else {
                             Button {
-                                fetching = true
                                 Task(priority: .background) {
                                     try await viewModel.updateLeaderboard()
                                 }
                             } label: {
                                 VStack(spacing: 10) {
                                     Image(systemName: "arrow.triangle.2.circlepath")
-                                        .foregroundColor(.gray)
-                                    Text("Retry")
-                                        .foregroundColor(.gray)
+                                    Text("Nothing yet")
+                                        .font(.secondaryFont(size: .headline))
                                 }
+                                .foregroundColor(.secondaryFont)
                             }
                             .frame(height: 100)
                         }
@@ -79,8 +72,26 @@ struct PlayerAttempts: View {
             .frame(height: Constant.screenBounds.height * 0.5)
             HStack {
                 Text(viewModel.displayName)
+                    .font(.secondaryFont())
+                    .foregroundColor(.jadeShadow)
                 Spacer()
-                Text("UNSOLVED")
+                Text(viewModel.personalRecord != nil ? String(viewModel.personalRecord!.groupCount) : "UNSOLVED")
+                    .font(.secondaryFont())
+                    .foregroundColor(viewModel.personalRecord != nil ? .success : .failure)
+            }
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 15)
+                    .fill(.white)
+                    .shadow(color: .primaryFont.opacity(0.2), radius: 6, x: 0, y: 4)
+            )
+        }
+        .padding(.horizontal, 50)
+        .onAppear {
+            viewModel.updateDisplayName()
+            viewModel.updatePersonalSubmission()
+            Task {
+                try? await viewModel.updateLeaderboard()
             }
         }
     }

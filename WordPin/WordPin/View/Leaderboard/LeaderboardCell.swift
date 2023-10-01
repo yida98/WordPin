@@ -9,15 +9,14 @@ import SwiftUI
 
 struct LeaderboardCell: View {
     
-    let username: String
-    let uniqueEntries: Int
+    let submission: Submission
+
     var body: some View {
         HStack {
-            Text(username)
+            Text(submission.displayName ?? "Unknown")
+                .font(.secondaryFont())
+                .foregroundColor(.jadeShadow)
             Spacer()
-            if uniqueEntries > 1 {
-                Text("+\(uniqueEntries)")
-            }
         }
     }
 }

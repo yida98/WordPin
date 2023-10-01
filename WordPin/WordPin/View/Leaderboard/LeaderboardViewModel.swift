@@ -9,27 +9,38 @@ import Foundation
 
 class LeaderboardViewModel: ObservableObject {
     @Published var leaderboard: [Submission]?
+    @Published var updatingLeaderboard: Bool = false
     @Published var record: Int?
+    @Published var displayName: String
+    @Published var personalRecord: Submission?
     var word: String?
-    var displayName: String
 
-    init(word: String? = nil, displayName: String) {
+    init(word: String? = nil) {
         self.word = word
-        self.displayName = displayName
+        self.displayName = AppData.shared.displayName
 
+        updatePersonalSubmission()
         Task { [weak self] in
             try? await self?.updateLeaderboard()
         }
     }
 
+    func updateDisplayName() {
+        self.displayName = AppData.shared.displayName
+    }
+
     func updateLeaderboard() async throws {
         // Find minimum input (1 number)
-        debugPrint("updating")
+        DispatchQueue.main.async { [weak self] in
+            self?.updatingLeaderboard = true
+        }
+
         let task = Task(priority: .background) { [weak self] in
             if let word = self?.word {
                 let leaderboardSubmissions = try await URLTask.shared.getSubmissions(for: word)
                 DispatchQueue.main.async { [weak self] in
                     self?.leaderboard = leaderboardSubmissions
+                    self?.updatingLeaderboard = false
                 }
             } else {
                 let dailyWord = try await URLTask.shared.getDailyWord()
@@ -37,6 +48,7 @@ class LeaderboardViewModel: ObservableObject {
                 DispatchQueue.main.async { [weak self] in
                     self?.leaderboard = leaderboardSubmissions
                     self?.word = dailyWord
+                    self?.updatingLeaderboard = false
                 }
             }
         }
@@ -44,7 +56,9 @@ class LeaderboardViewModel: ObservableObject {
         let timeOutTask = Task {
             try await Task.sleep(nanoseconds: UInt64(4) * NSEC_PER_SEC)
             task.cancel()
-            debugPrint("cancelled")
+            DispatchQueue.main.async { [weak self] in
+                self?.updatingLeaderboard = false
+            }
         }
 
         do {
@@ -57,5 +71,11 @@ class LeaderboardViewModel: ObservableObject {
 //        let record =
         // All users that match the record and how many unique solutions they have
 //        let users =
+    }
+
+    func updatePersonalSubmission() {
+        if let word = word, let submissions = PersistenceController.shared.fetchOne(word), let bestPersonalRecord = submissions.sorted(by: { $0.groupCount < $1.groupCount }).first {
+            self.personalRecord = bestPersonalRecord
+        }
     }
 }
