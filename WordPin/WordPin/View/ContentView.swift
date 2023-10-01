@@ -48,7 +48,7 @@ struct ContentView: View {
             }
             TabView {
                 GameTab(viewModel: viewModel)
-                PlayerAttempts()
+                PlayerAttempts(word: viewModel.word, displayName: viewModel.displayName)
             }
             .tabViewStyle(.page(indexDisplayMode: .always))
         }

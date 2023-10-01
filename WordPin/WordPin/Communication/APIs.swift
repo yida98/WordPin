@@ -20,7 +20,7 @@ struct SubmissionAPI {
         components.scheme = scheme
         components.host = host
         components.port = port
-        components.path = Route.submission.rawValue.appending("/\(encodedWord)")
+        components.path = Route.submissions.rawValue.appending("/\(encodedWord)")
 
         return components.url
     }
@@ -46,7 +46,7 @@ struct SubmissionAPI {
     }
 
     enum Route: String {
-        case submission = "/submission"
+        case submissions = "/submissions"
         case dailyWord = "/dailyWord"
         case erase = "/erase"
     }

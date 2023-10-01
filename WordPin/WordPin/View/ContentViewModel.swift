@@ -11,28 +11,26 @@ import Combine
 class ContentViewModel: ObservableObject {
     @Published var currentGame: GameViewModel?
     @Published var displayName: String
+    @Published var word: String?
     private var localSubmissionsSubscriber = Set<AnyCancellable>()
 
     init() {
         self.displayName = AppData.shared.displayName
-        Task { [weak self] in
-            await self?.makeNewGame()
+        Task(priority: .background) { [weak self] in
+            let word = try? await URLTask.shared.getDailyWord()
+            await self?.makeNewGame(word)
+            await MainActor.run { [weak self] in
+                self?.word = word
+            }
         }
     }
 
-    func makeNewGame(_ word: String? = nil) async -> GameViewModel? {
+    func makeNewGame(_ word: String?) async {
         if let word = word {
             await MainActor.run { [weak self] in
                 self?.currentGame = GameViewModel(word)
             }
-        } else {
-            if let newWord = try? await URLTask.shared.getDailyWord() {
-                await MainActor.run { [weak self] in
-                    self?.currentGame = GameViewModel(newWord)
-                }
-            }
         }
-        return self.currentGame
     }
 
     func finishedGame() {
@@ -45,18 +43,6 @@ class ContentViewModel: ObservableObject {
 //        }
 //        // TODO: Continue the game until new game
 //        self.currentGame = nil
-    }
-
-    func leaderboard() async -> [Submission]? {
-        // Find minimum input (1 number)
-        if let dailyWord = currentGame?.word {
-            return try? await URLTask.shared.getSubmissions(for: dailyWord)
-        }
-        // All users and their solutions
-//        let record =
-        // All users that match the record and how many unique solutions they have
-//        let users =
-        return nil
     }
 }
 

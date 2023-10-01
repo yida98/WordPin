@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LeaderboardCell: View {
+    
     let username: String
     let uniqueEntries: Int
     var body: some View {
