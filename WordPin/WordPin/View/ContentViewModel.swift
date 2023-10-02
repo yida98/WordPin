@@ -44,6 +44,15 @@ class ContentViewModel: ObservableObject {
 //        // TODO: Continue the game until new game
 //        self.currentGame = nil
     }
+
+    func restartGame() {
+        debugPrint("restart game")
+        if let word = word {
+            Task {
+                await makeNewGame(word)
+            }
+        }
+    }
 }
 
 struct LeaderboardUser {

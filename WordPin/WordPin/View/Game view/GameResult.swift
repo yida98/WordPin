@@ -16,7 +16,6 @@ struct GameResult: View {
                 Text("Points")
                 Text("Count")
             }
-            Text("Restart")
         }
     }
 }

@@ -42,7 +42,7 @@ class GameViewModel: ObservableObject {
                 input.replaceSubrange(input.index(before: input.endIndex)..<input.endIndex, with: ["."])
             }
         } else if newValue == "⏎", input.firstIndex(of: ".") == nil {
-            let completion = submit(input)
+            let completion = tryWordSubmission(input)
             if case .success(_) = completion {
                 input = String(repeating: ".", count: word.count)
             }
@@ -51,14 +51,12 @@ class GameViewModel: ObservableObject {
         return .incomplete
     }
 
-    func submit(_ entry: String) -> Result<String, QuizError> {
+    func tryWordSubmission(_ entry: String) -> Result<String, QuizError> {
         let validity = valid(entry)
 
         switch validity {
         case .success(let success):
-            updateMatchMap(with: success)
-            words.append(success.lowercased())
-
+            addWord(success)
         case .failure(let failure):
             switch failure {
             case .repeatTitle:
@@ -72,6 +70,11 @@ class GameViewModel: ObservableObject {
         return validity
     }
 
+    func addWord(_ word: String) {
+        updateMatchMap(with: word)
+        words.append(word.lowercased())
+    }
+
     func needShake() { shake.send() }
 
     private func updateMatchMap(with entry: String) {
@@ -81,7 +84,7 @@ class GameViewModel: ObservableObject {
             }
         }
         if matchMap.reduce(true, { $0 && $1 }) {
-            gameFinished = true
+            completeGame()
         }
     }
 
@@ -99,6 +102,12 @@ class GameViewModel: ObservableObject {
         } else  {
             return .failure(.repeatTitle)
         }
+    }
+
+    private func completeGame() {
+        gameFinished = true
+        // TODO: Uncomment save
+//        PersistenceController.shared.save(word: word, group: words)
     }
 }
 

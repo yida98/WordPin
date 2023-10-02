@@ -58,7 +58,7 @@ struct PlayerAttempts: View {
                                 }
                             } label: {
                                 VStack(spacing: 10) {
-                                    Image(systemName: "arrow.triangle.2.circlepath")
+                                    Image(systemName: "arrow.clockwise.circle")
                                     Text("Nothing yet")
                                         .font(.secondaryFont(size: .headline))
                                 }
