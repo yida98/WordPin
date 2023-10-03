@@ -17,9 +17,6 @@ struct PlayerHistory: View {
 
     var body: some View {
         VStack {
-            Text("History")
-                .font(.primary(size: .title1, emphasis: .bold))
-                .foregroundColor(.primaryFont)
             HStack {
                 Text("Word")
                     .font(.secondaryFont())
