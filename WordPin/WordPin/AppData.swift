@@ -12,6 +12,7 @@ class AppData: NSObject, UIApplicationDelegate, ObservableObject {
     static let shared = AppData()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        PersistenceController.shared.nuke()
         return true
     }
 

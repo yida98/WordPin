@@ -19,6 +19,7 @@ struct PlayerAttempts: View {
             Text("Leaderboard")
                 .font(.primary(size: .title1, emphasis: .bold))
                 .foregroundColor(.primaryFont)
+            Spacer()
             Group {
                 if let leaderboard = viewModel.leaderboard, leaderboard.count != 0 {
                     Text(String(leaderboard.first!.groupCount))

@@ -38,7 +38,6 @@ struct GameView: View {
             }
             Spacer(minLength: 0)
         }
-        .padding(.bottom, 80)
         .scenePadding(.minimum, edges: .all)
         .animation(.linear, value: viewModel.gameFinished)
     }

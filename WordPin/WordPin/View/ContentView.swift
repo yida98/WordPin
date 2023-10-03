@@ -48,7 +48,11 @@ struct ContentView: View {
             }
             TabView {
                 GameTab(viewModel: viewModel)
+                    .padding(.vertical, 60)
                 PlayerAttempts(word: viewModel.word, displayName: viewModel.displayName)
+                    .padding(.vertical, 60)
+                PlayerHistory()
+                    .padding(.vertical, 60)
             }
             .tabViewStyle(.page(indexDisplayMode: .always))
         }

@@ -64,9 +64,9 @@ class PersistenceController: ObservableObject {
         case submission = "Submission"
     }
     
-    func fetchAll() -> [NSManagedObject]? {
+    func fetchAll(fetchLimit: Int = 0) -> [Submission]? {
         let sortDescriptors = [NSSortDescriptor(key: "word", ascending: true)]
-        let results = fetch(entity: .submission, sortDescriptors: sortDescriptors)
+        let results = fetch(entity: .submission, sortDescriptors: sortDescriptors, fetchLimit: fetchLimit)
         switch results {
         case .success(let objects):
             return objects as? [Submission]
@@ -88,11 +88,14 @@ class PersistenceController: ObservableObject {
         }
     }
     
-    private func fetch(entity: EntityName, with predicate: NSPredicate? = nil, sortDescriptors: [NSSortDescriptor]? = nil) -> Result<[NSManagedObject]?, Error> {
+    private func fetch(entity: EntityName, with predicate: NSPredicate? = nil, sortDescriptors: [NSSortDescriptor]? = nil, fetchLimit: Int = 0) -> Result<[NSManagedObject]?, Error> {
         let managedContext = container.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity.rawValue)
         fetchRequest.predicate = predicate
         fetchRequest.sortDescriptors = sortDescriptors
+        if fetchLimit > 0 {
+            fetchRequest.fetchLimit = fetchLimit
+        }
         
         do {
             let results = try managedContext.fetch(fetchRequest) as? [NSManagedObject]
@@ -119,6 +122,20 @@ class PersistenceController: ObservableObject {
         saveContext()
 
         return entity
+    }
+
+    func nuke() {
+        for entity in EntityName.allCases {
+            let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: entity.rawValue)
+            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+
+            do {
+                try container.persistentStoreCoordinator.execute(deleteRequest, with: container.viewContext)
+            } catch {
+                // TODO: handle the error
+                return
+            }
+        }
     }
     
     private func saveContext() {

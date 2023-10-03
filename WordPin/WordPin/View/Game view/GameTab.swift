@@ -31,17 +31,39 @@ struct GameTab: View {
                         .fill(Color.jade.opacity(0.2))
                 )
             }
-            .padding(50)
-            Spacer()
+            .padding(.horizontal, 50)
+            Spacer(minLength: 0)
             Group {
                 if let currentGame = viewModel.currentGame {
                     GameView(viewModel: currentGame)
                 } else {
-                    ProgressView()
+                    VStack {
+                        if viewModel.loadingGame {
+                            ProgressView {
+                                Text("Loading...")
+                                    .font(.secondaryFont(size: .headline))
+                            }
+                            .foregroundColor(.secondaryFont)
+                            .frame(height: 100)
+                        } else {
+                            Button {
+                                Task(priority: .background) {
+                                    await viewModel.fetchDailyWord()
+                                }
+                            } label: {
+                                VStack(spacing: 10) {
+                                    Image(systemName: "arrow.clockwise.circle")
+                                    Text("Cannot reach server")
+                                        .font(.secondaryFont(size: .headline))
+                                }
+                                .foregroundColor(.secondaryFont)
+                            }
+                            .frame(height: 100)
+                        }
+                    }
                 }
             }
-            .frame(height: Constant.screenBounds.height * 0.75)
+            Spacer(minLength: 0)
         }
-        .background(Color.background)
     }
 }
