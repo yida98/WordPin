@@ -45,7 +45,7 @@ struct PlayerAttempts: View {
                         if viewModel.updatingLeaderboard {
                             ProgressView {
                                 Text("Loading...")
-                                    .font(.secondaryFont(size: .headline))
+                                    .font(.monospaced(size: .caption1, emphasis: .bold))
                             }
                             .foregroundColor(.secondaryFont)
                             .frame(height: 100)
@@ -58,7 +58,7 @@ struct PlayerAttempts: View {
                                 VStack(spacing: 10) {
                                     Image(systemName: "arrow.clockwise.circle")
                                     Text("Nothing yet")
-                                        .font(.secondaryFont(size: .headline))
+                                        .font(.monospaced(size: .caption1, emphasis: .bold))
                                 }
                                 .foregroundColor(.secondaryFont)
                             }
@@ -70,11 +70,11 @@ struct PlayerAttempts: View {
             .frame(height: Constant.screenBounds.height * 0.5)
             HStack {
                 Text(viewModel.displayName)
-                    .font(.secondaryFont())
+                    .font(.monospaced(size: .caption1))
                     .foregroundColor(.jadeShadow)
                 Spacer()
                 Text(viewModel.personalRecord != nil ? String(viewModel.personalRecord!.groupCount) : "UNSOLVED")
-                    .font(.secondaryFont())
+                    .font(.monospaced(size: .caption1, emphasis: .bold))
                     .foregroundColor(viewModel.personalRecord != nil ? .success : .failure)
             }
             .padding()

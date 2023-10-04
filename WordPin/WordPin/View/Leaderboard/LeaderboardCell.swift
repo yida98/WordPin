@@ -14,7 +14,7 @@ struct LeaderboardCell: View {
     var body: some View {
         HStack {
             Text(submission.displayName ?? "Unknown")
-                .font(.secondaryFont())
+                .font(.monospaced(size: .caption1))
                 .foregroundColor(.jadeShadow)
             Spacer()
         }

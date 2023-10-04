@@ -19,8 +19,8 @@ struct GameTab: View {
                 } label: {
                     HStack {
                         Image(systemName: "arrow.clockwise.circle")
-                        Text("Restart")
-                            .font(.secondaryFont())
+                        Text("restart")
+                            .font(.monospaced(size: .caption1, emphasis: .bold))
                     }
                     .foregroundColor(.jade)
                 }
@@ -41,7 +41,7 @@ struct GameTab: View {
                         if viewModel.loadingGame {
                             ProgressView {
                                 Text("Loading...")
-                                    .font(.secondaryFont(size: .headline))
+                                    .font(.monospaced(size: .caption1, emphasis: .bold))
                             }
                             .foregroundColor(.secondaryFont)
                             .frame(height: 100)
@@ -53,8 +53,8 @@ struct GameTab: View {
                             } label: {
                                 VStack(spacing: 10) {
                                     Image(systemName: "arrow.clockwise.circle")
-                                    Text("Cannot reach server")
-                                        .font(.secondaryFont(size: .headline))
+                                    Text("Server error")
+                                        .font(.monospaced(size: .caption1, emphasis: .bold))
                                 }
                                 .foregroundColor(.secondaryFont)
                             }

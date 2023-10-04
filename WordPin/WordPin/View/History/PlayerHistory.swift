@@ -19,11 +19,11 @@ struct PlayerHistory: View {
         VStack {
             HStack {
                 Text("Word")
-                    .font(.secondaryFont())
+                    .font(.monospaced(size: .caption1, emphasis: .bold))
                     .foregroundColor(.jadeShadow)
                 Spacer()
                 Text("Record")
-                    .font(.secondaryFont())
+                    .font(.monospaced(size: .caption1, emphasis: .bold))
                     .foregroundColor(.jade)
             }
             .padding()
@@ -53,7 +53,7 @@ struct PlayerHistory: View {
                     .foregroundColor(.secondaryFont)
                 Text("Nothing yet")
                     .foregroundColor(.secondaryFont)
-                    .font(.secondaryFont(size: .headline))
+                    .font(.monospaced(size: .caption1, emphasis: .bold))
             }
             Spacer(minLength: 0)
         }

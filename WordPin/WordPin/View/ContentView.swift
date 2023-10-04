@@ -53,13 +53,13 @@ struct ContentView: View {
             }
             TabView(selection: $selection) {
                 GameTab(viewModel: viewModel)
-                    .padding(.vertical, 60)
+                    .padding(.vertical, 50)
                     .tag(0)
                 PlayerAttempts(word: viewModel.word, displayName: viewModel.displayName)
-                    .padding(.vertical, 60)
+                    .padding(.vertical, 50)
                     .tag(1)
                 PlayerHistory()
-                    .padding(.vertical, 60)
+                    .padding(.vertical, 50)
                     .tag(2)
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
@@ -68,7 +68,7 @@ struct ContentView: View {
                 Button {
                     selection = 0
                 } label: {
-                    Text("Game")
+                    Image(systemName: "gamecontroller")
                 }
                 .buttonStyle(FloatingTabButton())
                 .background(floatingBackground(0))
@@ -76,7 +76,7 @@ struct ContentView: View {
                 Button {
                     selection = 1
                 } label: {
-                    Text("Leaderboard")
+                    Image(systemName: "globe.americas.fill")
                 }
                 .buttonStyle(FloatingTabButton())
                 .background(floatingBackground(1))
@@ -84,7 +84,7 @@ struct ContentView: View {
                 Button {
                     selection = 2
                 } label: {
-                    Text("History")
+                    Image(systemName: "list.bullet.circle")
                 }
                 .buttonStyle(FloatingTabButton())
                 .background(floatingBackground(2))
@@ -93,7 +93,7 @@ struct ContentView: View {
             .background(
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color.jade.opacity(0.2))
-                    .frame(width: currentSize.width + 14, height: currentSize.height + 6)
+                    .frame(width: currentSize.width + 14, height: currentSize.height + 14)
                     .position(currentPosition)
                     .animation(tabsShowing ? .easeOut(duration: 0.2) : .none, value: currentSize)
                     .animation(tabsShowing ? .easeOut(duration: 0.2) : .none, value: currentPosition)
@@ -136,7 +136,6 @@ struct ContentView: View {
 struct FloatingTabButton: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.secondaryFont(size: .title2))
             .foregroundColor(.jade)
     }
 }
