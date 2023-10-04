@@ -14,7 +14,7 @@ struct GameResult: View {
         VStack {
             HStack {
                 Text("Success!")
-                    .font(.primary(size: .title1, emphasis: .bold))
+                    .font(.primary(size: .headline, emphasis: .bold))
                     .foregroundColor(.success)
             }
         }

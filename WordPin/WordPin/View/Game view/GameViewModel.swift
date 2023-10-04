@@ -108,7 +108,7 @@ class GameViewModel: ObservableObject {
         gameFinished = true
         // TODO: Uncomment save
         if let submission = PersistenceController.shared.save(word: word, group: words) as? Submission {
-//            URLTask.shared.postSubmission(submission)
+            URLTask.shared.postSubmission(submission)
         }
     }
 }

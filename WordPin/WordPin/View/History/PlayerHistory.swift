@@ -66,13 +66,13 @@ struct PlayerHistory: View {
     // Not lazily loading the data
     private func fetchSubmissions() {
         if let submissions = PersistenceController.shared.fetchAll() {
-            var wordsToRecords = [String: Int]()
-            let orderedWords: [String] = submissions.compactMap {
-                guard let word = $0.word else { return nil }
+            var wordsToRecords = [String: Int32]()
+            let orderedWords: [String] = submissions.compactMap { submission -> String? in
+                guard let word = submission.word else { return nil }
                 if let value = wordsToRecords[word] {
-                    wordsToRecords[word] = min(value, $0.groupCount)
+                    wordsToRecords[word] = min(value, submission.groupCount)
                 } else {
-                    wordsToRecords[word] = $0.groupCount
+                    wordsToRecords[word] = submission.groupCount
                 }
                 return word
             }
@@ -143,5 +143,5 @@ struct PlayerHistory: View {
 
 struct HistoryCellData {
     var word: String
-    var record: Int
+    var record: Int32
 }

@@ -59,17 +59,20 @@ class URLTask {
         guard let requestURL = SubmissionAPI.submissionRequestURL(for: "") else { return }
         
         let json: [String: Any] = ["id": submission.id?.uuidString as Any,
-                                   "userId": AppData.userID,
                                    "word": submission.word as Any,
                                    "group": submission.group as Any,
-                                   "groupCount": submission.groupCount as Any,
                                    "timestamp": submission.timestamp as Any,
-                                   "displayName": submission.displayName as Any]
-        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+                                   "displayName": submission.displayName as Any,
+                                   "groupCount": submission.groupCount,
+                                   "userId": AppData.userID]
+
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        let encodedSubmission = try? encoder.encode(submission)
         
         var urlRequest = URLRequest(url: requestURL)
         urlRequest.httpMethod = "POST"
-        urlRequest.httpBody = jsonData
+        urlRequest.httpBody = encodedSubmission
         
         URLSession.shared.dataTask(with: urlRequest)
     }

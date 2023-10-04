@@ -15,6 +15,18 @@ struct WPServerController: RouteCollection {
         }
         return nil
     }()
+
+    let jsonEncoder: JSONEncoder = {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        return encoder
+    }()
+
+    let jsonDecoder: JSONDecoder = {
+        let encoder = JSONDecoder()
+        encoder.dateDecodingStrategy = .iso8601
+        return encoder
+    }()
     
     func boot(routes: RoutesBuilder) throws {
         routes.get(use: index)
@@ -33,25 +45,25 @@ struct WPServerController: RouteCollection {
 
     /// returns `[Submission]` encoded by `JSON`
     func index(req: Request) async throws -> Data {
-        try JSONEncoder().encode(try await Submission.query(on: req.db).all())
+        try jsonEncoder.encode(try await Submission.query(on: req.db).all())
     }
 
     /// returns `[Submission]` encoded by `JSON`
     func getSubmissions(req: Request) async throws -> Data {
-        try JSONEncoder().encode(getDailyWord(for: Date()))
+        try jsonEncoder.encode(getDailyWord(for: Date()))
     }
 
     /// returns `[Submission]` encoded by `JSON`
     func getWord(req: Request) async throws -> Data {
         guard let word = req.parameters.get("word"),
                 let minimum = try? await Submission.query(on: req.db).filter(\.$word == word).min(\.$groupCount) else {
-            return try JSONEncoder().encode([Submission]())
+            return try jsonEncoder.encode([Submission]())
         }
         let submissions = try await Submission.query(on: req.db)
             .filter(\.$word == word)
             .filter(\.$groupCount == minimum)
             .all()
-        return try JSONEncoder().encode(submissions)
+        return try jsonEncoder.encode(submissions)
     }
 
     /// returns `String` encoded by `JSON`
@@ -63,16 +75,18 @@ struct WPServerController: RouteCollection {
                 try await dailyWord.save(on: req.db)
             }
         }
-        return try JSONEncoder().encode(dailyWord)
+        return try jsonEncoder.encode(dailyWord)
     }
 
     /// returns `[DailyWord]` encoded by `JSON`
     func getDailyWords(req: Request) async throws -> Data {
-        try JSONEncoder().encode(try await DailyWord.query(on: req.db).all())
+        try jsonEncoder.encode(try await DailyWord.query(on: req.db).all())
     }
 
     func create(req: Request) async throws -> Submission {
-        let submission = try req.content.decode(Submission.self)
+        guard let byteBuffer = req.body.data else { throw Abort(.badRequest) }
+        let submission = try jsonDecoder.decode(Submission.self, from: byteBuffer)
+//        let submission = try req.content.decode(Submission.self)
         try await submission.save(on: req.db)
         return submission
     }

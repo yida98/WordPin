@@ -20,7 +20,7 @@ class Submission: NSManagedObject, Codable {
     @NSManaged var group: [String]?
     @NSManaged var timestamp: Date?
     @NSManaged var displayName: String?
-    @NSManaged var groupCount: Int // Values can be nil until the model is saved
+    @NSManaged var groupCount: Int32 // Values can be nil until the model is saved
     @NSManaged var userId: String?
     
     public required convenience init(from decoder: Decoder) throws {
@@ -38,7 +38,7 @@ class Submission: NSManagedObject, Codable {
         self.group = try container.decode([String].self, forKey: .group)
         self.timestamp = try container.decode(Date.self, forKey: .timestamp)
         self.displayName = try container.decode(String.self, forKey: .displayName)
-        self.groupCount = try container.decode(Int.self, forKey: .groupCount)
+        self.groupCount = try container.decode(Int32.self, forKey: .groupCount)
         self.userId = try container.decode(String.self, forKey: .userId)
     }
     
