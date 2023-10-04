@@ -71,8 +71,8 @@ class GameViewModel: ObservableObject {
     }
 
     func addWord(_ word: String) {
-        updateMatchMap(with: word)
         words.append(word.lowercased())
+        updateMatchMap(with: word)
     }
 
     func needShake() { shake.send() }
@@ -107,7 +107,9 @@ class GameViewModel: ObservableObject {
     private func completeGame() {
         gameFinished = true
         // TODO: Uncomment save
-//        PersistenceController.shared.save(word: word, group: words)
+        if let submission = PersistenceController.shared.save(word: word, group: words) as? Submission {
+//            URLTask.shared.postSubmission(submission)
+        }
     }
 }
 

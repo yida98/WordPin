@@ -13,8 +13,9 @@ struct GameResult: View {
     var body: some View {
         VStack {
             HStack {
-                Text("Points")
-                Text("Count")
+                Text("Success!")
+                    .font(.primary(size: .title1, emphasis: .bold))
+                    .foregroundColor(.success)
             }
         }
     }

@@ -117,6 +117,7 @@ class PersistenceController: ObservableObject {
         entity.setValue(group.count, forKey: Submission.CodingKeys.groupCount.rawValue)
         entity.setValue(word, forKey: Submission.CodingKeys.word.rawValue)
         entity.setValue(Date(), forKey: Submission.CodingKeys.timestamp.rawValue)
+        entity.setValue(AppData.userID, forKey: Submission.CodingKeys.userId.rawValue)
         entity.setValue(AppData.shared.displayName, forKey: Submission.CodingKeys.displayName.rawValue)
         
         saveContext()
