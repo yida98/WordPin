@@ -84,7 +84,7 @@ struct ContentView: View {
                 Button {
                     selection = 2
                 } label: {
-                    Image(systemName: "list.bullet.circle")
+                    Image(systemName: "person.text.rectangle")
                 }
                 .buttonStyle(FloatingTabButton())
                 .background(floatingBackground(2))

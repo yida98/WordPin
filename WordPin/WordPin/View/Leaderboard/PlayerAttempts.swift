@@ -16,58 +16,57 @@ struct PlayerAttempts: View {
 
     var body: some View {
         VStack {
-            Spacer()
-            Group {
-                if let leaderboard = viewModel.leaderboard, leaderboard.count != 0 {
-                    Text(String(leaderboard.first!.groupCount))
-                        .background(
-                            Image(systemName: "crown.fill")
-                                .resizable()
-                                .scaledToFit()
-                                .foregroundColor(.yellow.opacity(0.5))
-                                .frame(width: 60)
-                        )
-                        .accessibilityLabel("World record")
-                    Text("Attempts")
-                    List {
-                        Text("item")
-                        ForEach(leaderboard.indices, id: \.self) { leaderboardIndex in
-                            LeaderboardCell(submission: leaderboard[leaderboardIndex])
+            Spacer(minLength: 0)
+            if let leaderboard = viewModel.leaderboard, leaderboard.count != 0 {
+                Text(String(leaderboard.first!.groupCount))
+                    .background(
+                        Image(systemName: "crown.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .foregroundColor(.yellow.opacity(0.5))
+                            .frame(width: 60)
+                    )
+                    .accessibilityLabel("World record")
+                Text("Attempts")
+                List {
+                    Text("item")
+                    ForEach(leaderboard.indices, id: \.self) { leaderboardIndex in
+                        LeaderboardCell(submission: leaderboard[leaderboardIndex])
+                    }
+                }
+                .background(.clear)
+                .scrollContentBackground(.hidden)
+                .refreshable {
+                    try? await viewModel.updateLeaderboard()
+                }
+            } else {
+                VStack {
+                    if viewModel.updatingLeaderboard {
+                        ProgressView {
+                            Text("Loading...")
+                                .font(.monospaced(size: .caption1, emphasis: .bold))
                         }
-                    }
-                    .background(.clear)
-                    .scrollContentBackground(.hidden)
-                    .refreshable {
-                        try? await viewModel.updateLeaderboard()
-                    }
-                } else {
-                    VStack {
-                        if viewModel.updatingLeaderboard {
-                            ProgressView {
-                                Text("Loading...")
+                        .foregroundColor(.secondaryFont)
+                        .frame(height: 100)
+                    } else {
+                        Button {
+                            Task(priority: .background) {
+                                try await viewModel.updateLeaderboard()
+                            }
+                        } label: {
+                            VStack(spacing: 10) {
+                                Image(systemName: "arrow.clockwise.circle")
+                                Text("Nothing yet")
                                     .font(.monospaced(size: .caption1, emphasis: .bold))
                             }
                             .foregroundColor(.secondaryFont)
-                            .frame(height: 100)
-                        } else {
-                            Button {
-                                Task(priority: .background) {
-                                    try await viewModel.updateLeaderboard()
-                                }
-                            } label: {
-                                VStack(spacing: 10) {
-                                    Image(systemName: "arrow.clockwise.circle")
-                                    Text("Nothing yet")
-                                        .font(.monospaced(size: .caption1, emphasis: .bold))
-                                }
-                                .foregroundColor(.secondaryFont)
-                            }
-                            .frame(height: 100)
                         }
+                        .frame(height: 100)
                     }
                 }
             }
-            .frame(height: Constant.screenBounds.height * 0.5)
+            Spacer(minLength: 0)
+            // User information
             HStack {
                 Text(viewModel.displayName)
                     .font(.monospaced(size: .caption1))
