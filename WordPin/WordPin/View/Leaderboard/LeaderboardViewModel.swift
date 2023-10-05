@@ -21,7 +21,11 @@ class LeaderboardViewModel: ObservableObject {
 
         updatePersonalSubmission()
         Task { [weak self] in
-            try? await self?.updateLeaderboard()
+            do {
+                try await self?.updateLeaderboard()
+            } catch let error {
+                debugPrint(error.localizedDescription)
+            }
         }
     }
 

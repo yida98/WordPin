@@ -4,7 +4,7 @@
 FROM swift:5.8-jammy as build
 
 # debug or release
-ARG buildconf=debug
+ARG buildconf=release
 
 # Install OS updates and, if needed, sqlite3
 RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \

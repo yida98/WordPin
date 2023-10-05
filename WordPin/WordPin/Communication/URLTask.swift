@@ -11,6 +11,18 @@ import Combine
 class URLTask {
     static let shared = URLTask()
 
+    private let jsonEncoder: JSONEncoder = {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        return encoder
+    }()
+
+    private let jsonDecoder: JSONDecoder = {
+        let encoder = JSONDecoder()
+        encoder.dateDecodingStrategy = .iso8601
+        return encoder
+    }()
+
     private init() { }
 
     func getDailyWord() async throws -> String {
@@ -22,7 +34,7 @@ class URLTask {
         if let (data, response) = try? await URLSession.shared.data(for: urlRequest),
             let response = response as? HTTPURLResponse, response.statusCode == HTTPStatusCode.OK.rawValue {
             do {
-                let dailyWord = try JSONDecoder().decode(String.self, from: data)
+                let dailyWord = try jsonDecoder.decode(String.self, from: data)
                 return dailyWord
             } catch let error {
                 throw error
@@ -39,14 +51,15 @@ class URLTask {
         guard let requestURL = SubmissionAPI.submissionRequestURL(for: word) else {
             throw RequestError.InvalidRequestURL
         }
-        var urlRequest = URLRequest(url: requestURL, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 30.0)
+        var urlRequest = URLRequest(url: requestURL)
         urlRequest.httpMethod = "GET"
 
-        if let (data, response) = try? await URLSession.shared.data(for: urlRequest),
-            let response = response as? HTTPURLResponse,
+        let (data, response) = try await URLSession.shared.data(for: urlRequest)
+
+        if let response = response as? HTTPURLResponse,
             response.statusCode == HTTPStatusCode.OK.rawValue {
             do {
-                let submission = try JSONDecoder().decode([Submission].self, from: data)
+                let submission = try jsonDecoder.decode([Submission].self, from: data)
                 return submission
             } catch let error {
                 throw error
@@ -55,26 +68,18 @@ class URLTask {
         throw RequestError.InternalServerError
     }
     
-    func postSubmission(_ submission: Submission) {
-        guard let requestURL = SubmissionAPI.submissionRequestURL(for: "") else { return }
-        
-        let json: [String: Any] = ["id": submission.id?.uuidString as Any,
-                                   "word": submission.word as Any,
-                                   "group": submission.group as Any,
-                                   "timestamp": submission.timestamp as Any,
-                                   "displayName": submission.displayName as Any,
-                                   "groupCount": submission.groupCount,
-                                   "userId": AppData.userID]
+    func postSubmission(_ submission: Submission) async throws {
+        guard let requestURL = SubmissionAPI.baseURL.url else { return }
 
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .iso8601
-        let encodedSubmission = try? encoder.encode(submission)
-        
+        let encodedSubmission = try jsonEncoder.encode(submission)
+
         var urlRequest = URLRequest(url: requestURL)
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
         urlRequest.httpMethod = "POST"
         urlRequest.httpBody = encodedSubmission
-        
-        URLSession.shared.dataTask(with: urlRequest)
+
+        try await URLSession.shared.data(for: urlRequest)
     }
 
     func nukeSubmissions() {

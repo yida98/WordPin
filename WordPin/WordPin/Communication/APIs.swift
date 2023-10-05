@@ -16,30 +16,30 @@ struct SubmissionAPI {
         guard let encodedWord = word_id.lowercased().encodeUrl() else {
             return nil
         }
-        var components = URLComponents()
-        components.scheme = scheme
-        components.host = host
-        components.port = port
+        var components = baseURL
         components.path = Route.submissions.rawValue.appending("/\(encodedWord)")
 
         return components.url
     }
 
     static func getDailyWordURL() -> URL? {
-        var components = URLComponents()
-        components.scheme = scheme
-        components.host = host
-        components.port = port
+        var components = baseURL
         components.path = Route.dailyWord.rawValue
 
         return components.url
     }
 
-    static func nukeSubmissionsURL() -> URL? {
+    static var baseURL: URLComponents {
         var components = URLComponents()
         components.scheme = scheme
         components.host = host
         components.port = port
+
+        return components
+    }
+
+    static func nukeSubmissionsURL() -> URL? {
+        var components = baseURL
         components.path = Route.erase.rawValue
 
         return components.url

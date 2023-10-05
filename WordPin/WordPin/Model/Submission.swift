@@ -24,33 +24,32 @@ class Submission: NSManagedObject, Codable {
     @NSManaged var userId: String?
     
     public required convenience init(from decoder: Decoder) throws {
-        guard let codingUserInfoKeyManagedObjectContext = CodingUserInfoKey.managedObjectContext,
-            let managedObjectContext = decoder.userInfo[codingUserInfoKeyManagedObjectContext] as? NSManagedObjectContext,
-            let entity = NSEntityDescription.entity(forEntityName: "Submission", in: managedObjectContext) else {
+        let managedObjectContext = PersistenceController.shared.container.viewContext
+        guard let entity = NSEntityDescription.entity(forEntityName: "Submission", in: managedObjectContext) else {
             fatalError("Failed to decode Submission")
         }
         
         self.init(entity: entity, insertInto: managedObjectContext)
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.decode(UUID.self, forKey: .id)
-        self.word = try container.decode(String.self, forKey: .word)
-        self.group = try container.decode([String].self, forKey: .group)
-        self.timestamp = try container.decode(Date.self, forKey: .timestamp)
-        self.displayName = try container.decode(String.self, forKey: .displayName)
+        self.id = try container.decodeIfPresent(UUID.self, forKey: .id)
+        self.word = try container.decodeIfPresent(String.self, forKey: .word)
+        self.group = try container.decodeIfPresent([String].self, forKey: .group)
+        self.timestamp = try container.decodeIfPresent(Date.self, forKey: .timestamp)
+        self.displayName = try container.decodeIfPresent(String.self, forKey: .displayName)
         self.groupCount = try container.decode(Int32.self, forKey: .groupCount)
-        self.userId = try container.decode(String.self, forKey: .userId)
+        self.userId = try container.decodeIfPresent(String.self, forKey: .userId)
     }
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(id, forKey: .id)
-        try container.encode(word, forKey: .word)
-        try container.encode(group, forKey: .group)
-        try container.encode(timestamp, forKey: .timestamp)
-        try container.encode(displayName, forKey: .displayName)
+        try container.encodeIfPresent(id, forKey: .id)
+        try container.encodeIfPresent(word, forKey: .word)
+        try container.encodeIfPresent(group, forKey: .group)
+        try container.encodeIfPresent(timestamp, forKey: .timestamp)
+        try container.encodeIfPresent(displayName, forKey: .displayName)
         try container.encode(groupCount, forKey: .groupCount)
-        try container.encode(userId, forKey: .userId)
+        try container.encodeIfPresent(userId, forKey: .userId)
     }
 }
 

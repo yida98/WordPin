@@ -33,6 +33,7 @@ struct WPServerController: RouteCollection {
         routes.get("dailyWord", use: getDailyWord)
         routes.get("history", use: getDailyWords)
         routes.delete("erase", use: nuke)
+        routes.post(use: create)
 
         let submissions = routes.grouped("submissions")
         submissions.get(use: getSubmissions)
@@ -63,11 +64,14 @@ struct WPServerController: RouteCollection {
             .filter(\.$word == word)
             .filter(\.$groupCount == minimum)
             .all()
+
+        req.logger.log(level: .debug, "Fetched \(submissions)")
         return try jsonEncoder.encode(submissions)
     }
 
     /// returns `String` encoded by `JSON`
     func getDailyWord(req: Request) async throws -> Data {
+        req.logger.log(level: .debug, "Get daily word request")
         let dailyWord = getDailyWord(for: Date())
         Task(priority: .background) {
             if let todaysWord = dailyWord {
@@ -84,10 +88,11 @@ struct WPServerController: RouteCollection {
     }
 
     func create(req: Request) async throws -> Submission {
-        guard let byteBuffer = req.body.data else { throw Abort(.badRequest) }
-        let submission = try jsonDecoder.decode(Submission.self, from: byteBuffer)
-//        let submission = try req.content.decode(Submission.self)
+//        guard let byteBuffer = req.content else { throw Abort(.badRequest) }
+//        let submission = try jsonDecoder.decode(Submission.self, from: byteBuffer)
+        let submission = try req.content.decode(Submission.self, using: jsonDecoder)
         try await submission.save(on: req.db)
+        req.logger.log(level: .debug, "Saved \(submission)")
         return submission
     }
 

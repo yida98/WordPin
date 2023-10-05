@@ -37,7 +37,11 @@ struct PlayerAttempts: View {
                 .background(.clear)
                 .scrollContentBackground(.hidden)
                 .refreshable {
-                    try? await viewModel.updateLeaderboard()
+                    do {
+                        try await viewModel.updateLeaderboard()
+                    } catch let error {
+                        debugPrint(error.localizedDescription)
+                    }
                 }
             } else {
                 VStack {
@@ -51,7 +55,11 @@ struct PlayerAttempts: View {
                     } else {
                         Button {
                             Task(priority: .background) {
-                                try await viewModel.updateLeaderboard()
+                                do {
+                                    try await viewModel.updateLeaderboard()
+                                } catch let error {
+                                    debugPrint(error.localizedDescription)
+                                }
                             }
                         } label: {
                             VStack(spacing: 10) {
@@ -88,7 +96,11 @@ struct PlayerAttempts: View {
             viewModel.updateDisplayName()
             viewModel.updatePersonalSubmission()
             Task {
-                try? await viewModel.updateLeaderboard()
+                do {
+                    try await viewModel.updateLeaderboard()
+                } catch let error {
+                    debugPrint(error.localizedDescription)
+                }
             }
         }
     }
