@@ -17,8 +17,8 @@ struct PlayerAttempts: View {
     var body: some View {
         VStack {
             Spacer(minLength: 0)
-            if let leaderboard = viewModel.leaderboard, leaderboard.count != 0 {
-                Text(String(leaderboard.first!.groupCount))
+            if let leaderboard = viewModel.aggregatedLeaderboard, leaderboard.count != 0, let record = viewModel.record {
+                Text(String(record))
                     .background(
                         Image(systemName: "crown.fill")
                             .resizable()
@@ -29,7 +29,6 @@ struct PlayerAttempts: View {
                     .accessibilityLabel("World record")
                 Text("Attempts")
                 List {
-                    Text("item")
                     ForEach(leaderboard.indices, id: \.self) { leaderboardIndex in
                         LeaderboardCell(submission: leaderboard[leaderboardIndex])
                     }

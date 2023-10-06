@@ -8,9 +8,9 @@
 import Foundation
 
 class LeaderboardViewModel: ObservableObject {
-    @Published var leaderboard: [Submission]?
+    @Published var aggregatedLeaderboard: [AggregatedLeaderboardSubmission]?
     @Published var updatingLeaderboard: Bool = false
-    @Published var record: Int?
+    @Published var record: Int32?
     @Published var displayName: String
     @Published var personalRecord: Submission?
     var word: String?
@@ -43,14 +43,14 @@ class LeaderboardViewModel: ObservableObject {
             if let word = self?.word {
                 let leaderboardSubmissions = try await URLTask.shared.getSubmissions(for: word)
                 DispatchQueue.main.async { [weak self] in
-                    self?.leaderboard = leaderboardSubmissions
+                    self?.updateAggregatedLeaderboardData(from: leaderboardSubmissions)
                     self?.updatingLeaderboard = false
                 }
             } else {
                 let dailyWord = try await URLTask.shared.getDailyWord()
                 let leaderboardSubmissions = try await URLTask.shared.getSubmissions(for: dailyWord)
                 DispatchQueue.main.async { [weak self] in
-                    self?.leaderboard = leaderboardSubmissions
+                    self?.updateAggregatedLeaderboardData(from: leaderboardSubmissions)
                     self?.word = dailyWord
                     self?.updatingLeaderboard = false
                 }
@@ -82,4 +82,38 @@ class LeaderboardViewModel: ObservableObject {
             self.personalRecord = bestPersonalRecord
         }
     }
+
+    func updateAggregatedLeaderboardData(from submissions: [Submission]) {
+        var aggregatedIdMap = [String: Int]()
+        var idToDisplayNameMap = [String: String]()
+
+        for submission in submissions {
+            if (record == nil) {
+                record = submission.groupCount
+            }
+            if let userId = submission.userId {
+                idToDisplayNameMap[userId] = submission.displayName ?? "Unknown"
+                if let value = aggregatedIdMap[userId] {
+                    aggregatedIdMap[userId] = value + 1
+                } else {
+                    aggregatedIdMap[userId] = 1
+                }
+            }
+        }
+
+
+
+        var result = [AggregatedLeaderboardSubmission]()
+        for (userId, value) in aggregatedIdMap {
+            result.append(AggregatedLeaderboardSubmission(displayName: idToDisplayNameMap[userId] ?? "Unknown", userId: userId, submissions: value))
+        }
+
+        self.aggregatedLeaderboard = result
+    }
+}
+
+struct AggregatedLeaderboardSubmission {
+    var displayName: String
+    var userId: String
+    var submissions: Int
 }
