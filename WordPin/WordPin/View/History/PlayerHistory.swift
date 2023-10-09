@@ -71,73 +71,74 @@ struct PlayerHistory: View {
                 guard let word = submission.word else { return nil }
                 if let value = wordsToRecords[word] {
                     wordsToRecords[word] = min(value, submission.groupCount)
+                    return nil
                 } else {
                     wordsToRecords[word] = submission.groupCount
+                    return word
                 }
-                return word
             }
-            max = history?.count ?? 0
             history = orderedWords.compactMap {
                 if let record = wordsToRecords[$0] {
                     return HistoryCellData(word: $0, record: record)
                 }
                 return nil
             }
+            max = history?.count ?? 0
         }
-        max = 53
-        history = [.init(word: "doing", record: 3),
-                   .init(word: "magnus", record: 5),
-                   .init(word: "escape", record: 4),
-                   .init(word: "rook", record: 2),
-                   .init(word: "all", record: 5),
-                   .init(word: "afoiwj", record: 4),
-                   .init(word: "alumni", record: 2),
-                   .init(word: "enpassant", record: 5),
-                   .init(word: "ptermisluasquamia", record: 4),
-                   .init(word: "sfdsgh", record: 2),
-                   .init(word: "sfgja", record: 2),
-                   .init(word: "enpjassant", record: 5),
-                   .init(word: "pojqaptermisluasquamia", record: 4),
-                   .init(word: "sdfasdf", record: 2),
-                   .init(word: "magnus", record: 5),
-                   .init(word: "escape", record: 4),
-                   .init(word: "rook", record: 2),
-                   .init(word: "all", record: 5),
-                   .init(word: "afoiwj", record: 4),
-                   .init(word: "alumni", record: 2),
-                   .init(word: "enpassant", record: 5),
-                   .init(word: "ptermisluasquamia", record: 4),
-                   .init(word: "sfdsgh", record: 2),
-                   .init(word: "sfgja", record: 2),
-                   .init(word: "enpjassant", record: 5),
-                   .init(word: "pojqaptermisluasquamia", record: 4),
-                   .init(word: "sdfasdf", record: 2),
-                   .init(word: "magnus", record: 5),
-                   .init(word: "escape", record: 4),
-                   .init(word: "rook", record: 2),
-                   .init(word: "all", record: 5),
-                   .init(word: "afoiwj", record: 4),
-                   .init(word: "alumni", record: 2),
-                   .init(word: "enpassant", record: 5),
-                   .init(word: "ptermisluasquamia", record: 4),
-                   .init(word: "sfdsgh", record: 2),
-                   .init(word: "sfgja", record: 2),
-                   .init(word: "enpjassant", record: 5),
-                   .init(word: "pojqaptermisluasquamia", record: 4),
-                   .init(word: "sdfasdf", record: 2),
-                   .init(word: "magnus", record: 5),
-                   .init(word: "escape", record: 4),
-                   .init(word: "rook", record: 2),
-                   .init(word: "all", record: 5),
-                   .init(word: "afoiwj", record: 4),
-                   .init(word: "alumni", record: 2),
-                   .init(word: "enpassant", record: 5),
-                   .init(word: "ptermisluasquamia", record: 4),
-                   .init(word: "sfdsgh", record: 2),
-                   .init(word: "sfgja", record: 2),
-                   .init(word: "enpjassant", record: 5),
-                   .init(word: "pojqaptermisluasquamia", record: 4),
-                   .init(word: "sdfasdf", record: 2)]
+//        max = 53
+//        history = [.init(word: "doing", record: 3),
+//                   .init(word: "magnus", record: 5),
+//                   .init(word: "escape", record: 4),
+//                   .init(word: "rook", record: 2),
+//                   .init(word: "all", record: 5),
+//                   .init(word: "afoiwj", record: 4),
+//                   .init(word: "alumni", record: 2),
+//                   .init(word: "enpassant", record: 5),
+//                   .init(word: "ptermisluasquamia", record: 4),
+//                   .init(word: "sfdsgh", record: 2),
+//                   .init(word: "sfgja", record: 2),
+//                   .init(word: "enpjassant", record: 5),
+//                   .init(word: "pojqaptermisluasquamia", record: 4),
+//                   .init(word: "sdfasdf", record: 2),
+//                   .init(word: "magnus", record: 5),
+//                   .init(word: "escape", record: 4),
+//                   .init(word: "rook", record: 2),
+//                   .init(word: "all", record: 5),
+//                   .init(word: "afoiwj", record: 4),
+//                   .init(word: "alumni", record: 2),
+//                   .init(word: "enpassant", record: 5),
+//                   .init(word: "ptermisluasquamia", record: 4),
+//                   .init(word: "sfdsgh", record: 2),
+//                   .init(word: "sfgja", record: 2),
+//                   .init(word: "enpjassant", record: 5),
+//                   .init(word: "pojqaptermisluasquamia", record: 4),
+//                   .init(word: "sdfasdf", record: 2),
+//                   .init(word: "magnus", record: 5),
+//                   .init(word: "escape", record: 4),
+//                   .init(word: "rook", record: 2),
+//                   .init(word: "all", record: 5),
+//                   .init(word: "afoiwj", record: 4),
+//                   .init(word: "alumni", record: 2),
+//                   .init(word: "enpassant", record: 5),
+//                   .init(word: "ptermisluasquamia", record: 4),
+//                   .init(word: "sfdsgh", record: 2),
+//                   .init(word: "sfgja", record: 2),
+//                   .init(word: "enpjassant", record: 5),
+//                   .init(word: "pojqaptermisluasquamia", record: 4),
+//                   .init(word: "sdfasdf", record: 2),
+//                   .init(word: "magnus", record: 5),
+//                   .init(word: "escape", record: 4),
+//                   .init(word: "rook", record: 2),
+//                   .init(word: "all", record: 5),
+//                   .init(word: "afoiwj", record: 4),
+//                   .init(word: "alumni", record: 2),
+//                   .init(word: "enpassant", record: 5),
+//                   .init(word: "ptermisluasquamia", record: 4),
+//                   .init(word: "sfdsgh", record: 2),
+//                   .init(word: "sfgja", record: 2),
+//                   .init(word: "enpjassant", record: 5),
+//                   .init(word: "pojqaptermisluasquamia", record: 4),
+//                   .init(word: "sdfasdf", record: 2)]
     }
 }
 
