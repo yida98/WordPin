@@ -13,11 +13,11 @@ struct PlayerHistoryCell: View {
     var body: some View {
         HStack {
             Text(history.word)
-                .font(.monospaced(size: .body))
-                .foregroundColor(.secondaryFont)
+                .font(.monospaced(size: .caption1))
+                .foregroundColor(.jadeShadow)
             Spacer(minLength: 0)
             Text(String(history.record))
-                .font(.monospaced(size: .body, emphasis: .bold))
+                .font(.monospaced(size: .caption1, emphasis: .bold))
                 .foregroundColor(.jade)
         }
     }

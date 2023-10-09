@@ -16,17 +16,17 @@ struct PlayerHistory: View {
     @State private var searchText: String = ""
 
     var body: some View {
-        VStack {
+        VStack(spacing: 4) {
             HStack {
                 Text("Word")
-                    .font(.monospaced(size: .caption1, emphasis: .bold))
+                    .font(.monospaced(size: .headline, emphasis: .bold))
                     .foregroundColor(.jadeShadow)
                 Spacer()
                 Text("Record")
-                    .font(.monospaced(size: .caption1, emphasis: .bold))
+                    .font(.monospaced(size: .headline, emphasis: .bold))
                     .foregroundColor(.jade)
             }
-            .padding()
+            .padding(.horizontal, 36)
             Spacer(minLength: 0)
             if let history = history, history.count > 0 {
                 List {
@@ -45,7 +45,7 @@ struct PlayerHistory: View {
                             }
                     }
                 }
-                .listStyle(.plain)
+                .background(.clear)
                 .scrollContentBackground(.hidden)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
             } else {

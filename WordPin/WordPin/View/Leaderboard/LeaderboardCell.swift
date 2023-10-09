@@ -16,7 +16,7 @@ struct LeaderboardCell: View {
             Text(submission.displayName)
                 .font(.monospaced(size: .caption1))
                 .foregroundColor(.jadeShadow)
-            Spacer()
+            Spacer(minLength: 0)
             Text(submissionsCount())
                 .font(.monospaced(size: .caption1, emphasis: .italic))
                 .foregroundColor(.success)
