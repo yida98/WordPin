@@ -18,16 +18,22 @@ struct PlayerAttempts: View {
         VStack {
             Spacer(minLength: 0)
             if let leaderboard = viewModel.aggregatedLeaderboard, leaderboard.count != 0, let record = viewModel.record {
-                Text(String(record))
-                    .background(
-                        Image(systemName: "crown.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .foregroundColor(.yellow.opacity(0.5))
-                            .frame(width: 60)
-                    )
-                    .accessibilityLabel("World record")
-                Text("Attempts")
+                VStack(spacing: 10) {
+                    Text(String(record))
+                        .font(.monospaced(size: .title2, emphasis: .bold))
+                        .foregroundColor(.jadeShadow)
+                        .background(
+                            Image(systemName: "crown.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .foregroundColor(.yellow.opacity(0.5))
+                                .frame(width: 60)
+                        )
+                        .accessibilityLabel("World record")
+                    Text("Daily Record")
+                        .font(.monospaced(size: .caption1, emphasis: .bold))
+                        .foregroundColor(.jade)
+                }
                 List {
                     ForEach(leaderboard.indices, id: \.self) { leaderboardIndex in
                         LeaderboardCell(submission: leaderboard[leaderboardIndex])
