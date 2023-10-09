@@ -88,7 +88,7 @@ class LeaderboardViewModel: ObservableObject {
         var idToDisplayNameMap = [String: String]()
 
         for submission in submissions {
-            if (record == nil) {
+            if (record == nil) || record != submission.groupCount {
                 record = submission.groupCount
             }
             if let userId = submission.userId {
