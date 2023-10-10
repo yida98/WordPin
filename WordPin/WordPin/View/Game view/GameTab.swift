@@ -47,9 +47,7 @@ struct GameTab: View {
                         .frame(height: 100)
                     } else {
                         Button {
-                            Task(priority: .background) {
-                                await viewModel.fetchDailyWord()
-                            }
+                            viewModel.attachGameSession()
                         } label: {
                             VStack(spacing: 10) {
                                 Image(systemName: "arrow.clockwise.circle")

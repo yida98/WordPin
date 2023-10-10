@@ -9,15 +9,15 @@ import Foundation
 import Combine
 import UIKit
 
-class GameViewModel: ObservableObject {
+class GameViewModel: ObservableObject, Codable {
     /// Display of the words will always be uppercased, however, they are fetched and saved as lowercased.
     @Published var words = [String]() {
         didSet {
-            wordsCount = words.count
+            wordsCount = Int32(words.count)
         }
     }
     @Published var word: String
-    @Published var wordsCount = 0
+    @Published var wordsCount: Int32 = 0
     @Published var matchMap: [Bool]
     @Published var input: String
     @Published var gameFinished: Bool = false
@@ -30,6 +30,30 @@ class GameViewModel: ObservableObject {
         self.word = word
         self.matchMap = Array(repeating: false, count: word.count)
         self.input = String(repeating: ".", count: word.count)
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case words, word, wordsCount, matchMap, input, gameFinished
+    }
+
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.words = try container.decode([String].self, forKey: .words)
+        self.word = try container.decode(String.self, forKey: .word)
+        self.wordsCount = try container.decode(Int32.self, forKey: .wordsCount)
+        self.matchMap = try container.decode([Bool].self, forKey: .matchMap)
+        self.input = try container.decode(String.self, forKey: .input)
+        self.gameFinished = try container.decode(Bool.self, forKey: .gameFinished)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(words, forKey: .words)
+        try container.encode(word, forKey: .word)
+        try container.encode(wordsCount, forKey: .wordsCount)
+        try container.encode(matchMap, forKey: .matchMap)
+        try container.encode(String(repeating: ".", count: word.count), forKey: .input)
+        try container.encode(gameFinished, forKey: .gameFinished)
     }
 
     func updateInput(_ newValue: Character?) -> Completion<String, QuizError> {
@@ -73,6 +97,11 @@ class GameViewModel: ObservableObject {
     func addWord(_ word: String) {
         words.append(word.lowercased())
         updateMatchMap(with: word)
+        if allMatched() {
+            completeGame()
+        } else {
+            try? AppData.shared.saveSession(self)
+        }
     }
 
     func needShake() { shake.send() }
@@ -83,9 +112,10 @@ class GameViewModel: ObservableObject {
                 matchMap[charIdx].toggle()
             }
         }
-        if matchMap.reduce(true, { $0 && $1 }) {
-            completeGame()
-        }
+    }
+
+    private func allMatched() -> Bool {
+        return matchMap.reduce(true, { $0 && $1 })
     }
 
     private func valid(_ entry: String) -> Result<String, QuizError> {
@@ -106,6 +136,7 @@ class GameViewModel: ObservableObject {
 
     private func completeGame() {
         gameFinished = true
+        try? AppData.shared.removeSession()
         // TODO: Uncomment save
         if let submission = PersistenceController.shared.save(word: word, group: words) as? Submission {
             Task(priority: .background) {

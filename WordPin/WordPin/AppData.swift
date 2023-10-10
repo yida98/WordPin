@@ -16,6 +16,10 @@ class AppData: NSObject, UIApplicationDelegate, ObservableObject {
         return true
     }
 
+    func applicationWillTerminate(_ application: UIApplication) {
+        debugPrint("TERMINATING")
+    }
+
     static let userID: String = {
         let userDefaults = UserDefaults.standard
         let userIDKey = "userID"
@@ -50,5 +54,39 @@ class AppData: NSObject, UIApplicationDelegate, ObservableObject {
 
     static func generateUsername() -> String {
         "User\(Int.random(in: 1000...9999))"
+    }
+
+    func saveSession(_ gameSession: GameViewModel?) throws {
+        let userDefaults = UserDefaults.standard
+        let gameSessionKey = "gameSession"
+        do {
+            let encodedSession = try JSONEncoder().encode(gameSession)
+            userDefaults.set(encodedSession, forKey: gameSessionKey)
+            self.objectWillChange.send()
+        } catch let error {
+            throw error
+        }
+    }
+
+    func removeSession() throws {
+        do {
+            try saveSession(nil)
+        } catch let error {
+            throw error
+        }
+    }
+
+    func fetchExistingSession() throws -> GameViewModel? {
+        let userDefaults = UserDefaults.standard
+        let gameSessionKey = "gameSession"
+
+        guard let currentGameSessionData = userDefaults.data(forKey: gameSessionKey) else { return nil }
+        do {
+            let decoder = JSONDecoder()
+            let currentGameSession = try decoder.decode(GameViewModel.self, from: currentGameSessionData)
+            return currentGameSession
+        } catch let error {
+            throw error
+        }
     }
 }

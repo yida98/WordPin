@@ -18,9 +18,7 @@ class ContentViewModel: ObservableObject {
 
     init() {
         self.displayName = AppData.shared.displayName
-        Task { [weak self] in
-            await self?.fetchDailyWord()
-        }
+        attachGameSession()
     }
 
     func makeNewGame(_ word: String?) async {
@@ -31,7 +29,25 @@ class ContentViewModel: ObservableObject {
         }
     }
 
-    func fetchDailyWord() async {
+    func attachGameSession() {
+        let existingSession = try? AppData.shared.fetchExistingSession()
+        Task(priority: .background) { [weak self] in
+            let word = await self?.fetchDailyWord()
+            if let dailyWord = word, let session = existingSession, dailyWord.lowercased() == session.word.lowercased() {
+                DispatchQueue.main.async { [weak self] in
+                    self?.currentGame = existingSession
+                }
+            } else {
+                await self?.makeNewGame(word)
+            }
+            DispatchQueue.main.async { [weak self] in
+                self?.word = word
+                self?.loadingGame = false
+            }
+        }
+    }
+
+    func fetchDailyWord() async -> String? {
         DispatchQueue.main.async { [weak self] in
             self?.loadingGame = true
         }
@@ -39,23 +55,17 @@ class ContentViewModel: ObservableObject {
         let fetchWordTask = Task(priority: .background) { [weak self] in
             let word = try? await URLTask.shared.getDailyWord()
             await self?.makeNewGame(word)
-            DispatchQueue.main.async { [weak self] in
-                self?.word = word
-                self?.loadingGame = false
-            }
+            return word
         }
 
         let timeOutTask = Task {
             try await Task.sleep(nanoseconds: UInt64(4) * NSEC_PER_SEC)
             fetchWordTask.cancel()
-            DispatchQueue.main.async { [weak self] in
-                self?.loadingGame = false
-            }
         }
 
-
-        await fetchWordTask.value
+        let result = await fetchWordTask.value
         timeOutTask.cancel()
+        return result
     }
 
     func finishedGame() {
