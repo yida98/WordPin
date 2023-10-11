@@ -56,7 +56,7 @@ class GameViewModel: ObservableObject, Codable {
         try container.encode(gameFinished, forKey: .gameFinished)
     }
 
-    func updateInput(_ newValue: Character?) -> Completion<String, QuizError> {
+    func updateInput(_ newValue: Character?) async -> Completion<String, QuizError> {
         if let newValue = newValue, newValue.isLetter, let spaceIndex = input.firstIndex(of: ".") {
             input.replaceSubrange(spaceIndex..<input.index(after: spaceIndex), with: [newValue])
         } else if newValue == "⌫" {
@@ -66,7 +66,7 @@ class GameViewModel: ObservableObject, Codable {
                 input.replaceSubrange(input.index(before: input.endIndex)..<input.endIndex, with: ["."])
             }
         } else if newValue == "⏎", input.firstIndex(of: ".") == nil {
-            let completion = tryWordSubmission(input)
+            let completion = await tryWordSubmission(input)
             if case .success(_) = completion {
                 input = String(repeating: ".", count: word.count)
             }
@@ -75,8 +75,8 @@ class GameViewModel: ObservableObject, Codable {
         return .incomplete
     }
 
-    func tryWordSubmission(_ entry: String) -> Result<String, QuizError> {
-        let validity = valid(entry)
+    func tryWordSubmission(_ entry: String) async -> Result<String, QuizError> {
+        let validity = await valid(entry)
 
         switch validity {
         case .success(let success):
@@ -118,14 +118,19 @@ class GameViewModel: ObservableObject, Codable {
         return matchMap.reduce(true, { $0 && $1 })
     }
 
-    private func valid(_ entry: String) -> Result<String, QuizError> {
+    private func valid(_ entry: String) async -> Result<String, QuizError> {
         let comparator = word.lowercased()
         let comparableInput = entry.lowercased()
 
         if comparator != comparableInput {
             if !words.contains(comparableInput) {
                 // TODO: Check validity of vocabulary
-                return .success(entry)
+                
+                if let vocabularyValidity = try? await URLTask.shared.getValidity(of: comparableInput), vocabularyValidity {
+                    return .success(entry)
+                } else {
+                    return .failure(.invalidVocabulary)
+                }
             } else {
                 return .failure(.repeatEntry(comparableInput))
             }
@@ -137,7 +142,6 @@ class GameViewModel: ObservableObject, Codable {
     private func completeGame() {
         gameFinished = true
         try? AppData.shared.removeSession()
-        // TODO: Uncomment save
         if let submission = PersistenceController.shared.save(word: word, group: words) as? Submission {
             Task(priority: .background) {
                 try? await URLTask.shared.postSubmission(submission)

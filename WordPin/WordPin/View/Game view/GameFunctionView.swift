@@ -44,31 +44,35 @@ struct GameFunctionView: View {
             GameKeyboard(key: $keyboardInput)
                 .disabled(viewModel.gameFinished)
                 .onChange(of: keyboardInput) { newValue in
-                    let competion = viewModel.updateInput(newValue)
-                    switch competion {
-                    case .completed(let result):
-                        switch result {
-                        case .success(_):
+                    Task(priority: .background) {
+                        let competion = await viewModel.updateInput(newValue)
+                        switch competion {
+                        case .completed(let result):
+                            switch result {
+                            case .success(_):
+                                // TODO: Do something
+                                break
+                            case .failure(let error):
+                                withAnimation {
+                                    shouldShake.toggle()
+                                }
+                                switch error {
+                                case .repeatTitle:
+                                    errorMessage = "Cannot repeat target word"
+                                case .invalidVocabulary:
+                                    errorMessage = "Invalid vocabulary"
+                                case .repeatEntry(let word):
+                                    errorMessage = "Repeating \"\(word)\""
+                                }
+                            }
+                        case .incomplete:
                             // TODO: Do something
                             break
-                        case .failure(let error):
-                            withAnimation {
-                                shouldShake.toggle()
-                            }
-                            switch error {
-                            case .repeatTitle:
-                                errorMessage = "Cannot repeat target word"
-                            case .invalidVocabulary:
-                                errorMessage = "Invalid"
-                            case .repeatEntry(let word):
-                                errorMessage = "Repeating \"\(word)\""
-                            }
                         }
-                    case .incomplete:
-                        // TODO: Do something
-                        break
+                        DispatchQueue.main.async {
+                            keyboardInput = nil
+                        }
                     }
-                    keyboardInput = nil
                 }
         }
     }

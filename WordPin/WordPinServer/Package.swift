@@ -23,7 +23,8 @@ let package = Package(
                 .product(name: "Vapor", package: "vapor")
             ],
             resources: [
-                .copy("Resources/wordList.txt")
+                .copy("Resources/wordList.txt"),
+                .copy("Resources/words_dictionary.json")
             ]
         ),
         .testTarget(name: "AppTests", dependencies: [

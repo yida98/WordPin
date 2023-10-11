@@ -39,9 +39,12 @@ struct WPServerController: RouteCollection {
         submissions.get(use: getSubmissions)
         submissions.get(":word", use: getWord)
         submissions.post(use: create)
-        submissions.group(":todoID") { todo in
-            todo.delete(use: delete)
-        }
+//        submissions.group(":todoID") { todo in
+//            todo.delete(use: delete)
+//        }
+
+        let validation = routes.grouped("validation")
+        validation.get(":word", use: checkValidation)
     }
 
     /// returns `[Submission]` encoded by `JSON`
@@ -114,6 +117,18 @@ struct WPServerController: RouteCollection {
 
         guard let wordList = WPServerController.wordList, wordIndex < wordList.count else { return nil }
         return wordList[wordIndex]
+    }
+
+    func checkValidation(req: Request) async throws -> Bool {
+        if let word = req.parameters.get("word"),
+           let path = Bundle.module.path(forResource: "words_dictionary", ofType: "json") {
+            let data = try Data(contentsOf: URL(filePath: path), options: .mappedIfSafe)
+            let jsonResult = try JSONSerialization.jsonObject(with: data)
+            if let wordsDictionary = jsonResult as? [String: Any], let _ = wordsDictionary[word] {
+                return true
+            }
+        }
+        return false
     }
 }
 

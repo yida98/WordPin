@@ -69,7 +69,7 @@ class URLTask {
     }
     
     func postSubmission(_ submission: Submission) async throws {
-        guard let requestURL = SubmissionAPI.baseURL.url else { return }
+        guard let requestURL = SubmissionAPI.baseURLComponents.url else { return }
 
         let encodedSubmission = try jsonEncoder.encode(submission)
 
@@ -80,6 +80,20 @@ class URLTask {
         urlRequest.httpBody = encodedSubmission
 
         try await URLSession.shared.data(for: urlRequest)
+    }
+
+    func getValidity(of word: String) async throws -> Bool {
+        guard let url = SubmissionAPI.validateWordURL(for: word) else { throw RequestError.InvalidRequestURL }
+
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "GET"
+
+        let (data, response) = try await URLSession.shared.data(for: urlRequest)
+
+        if let response = response as? HTTPURLResponse, response.statusCode == HTTPStatusCode.OK.rawValue, let responseBool = String(data: data, encoding: .utf8) as? NSString {
+            return responseBool.boolValue
+        }
+        return false
     }
 
     func nukeSubmissions() {
