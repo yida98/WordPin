@@ -56,6 +56,7 @@ class GameViewModel: ObservableObject, Codable {
         try container.encode(gameFinished, forKey: .gameFinished)
     }
 
+    @MainActor
     func updateInput(_ newValue: Character?) async -> Completion<String, QuizError> {
         if let newValue = newValue, newValue.isLetter, let spaceIndex = input.firstIndex(of: ".") {
             input.replaceSubrange(spaceIndex..<input.index(after: spaceIndex), with: [newValue])
@@ -75,6 +76,7 @@ class GameViewModel: ObservableObject, Codable {
         return .incomplete
     }
 
+    @MainActor
     func tryWordSubmission(_ entry: String) async -> Result<String, QuizError> {
         let validity = await valid(entry)
 
