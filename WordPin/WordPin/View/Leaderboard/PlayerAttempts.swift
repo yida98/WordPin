@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PlayerAttempts: View {
     @StateObject var viewModel: LeaderboardViewModel
+    private let softGenerator = UIImpactFeedbackGenerator(style: .soft)
 
     init(word: String?, displayName: String) {
         self._viewModel = StateObject(wrappedValue: LeaderboardViewModel(word: word))
@@ -59,6 +60,7 @@ struct PlayerAttempts: View {
                         .frame(height: 100)
                     } else {
                         Button {
+                            softGenerator.impactOccurred()
                             Task(priority: .background) {
                                 do {
                                     try await viewModel.updateLeaderboard()

@@ -13,6 +13,7 @@ struct GameKeyboard: View {
       [["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
        ["A", "S", "D", "F", "G", "H", "J", "K", "L", "⌫"],
        ["Z", "X", "C", "V", "B", "N", "M", "⏎"]]
+    private let generator = UIImpactFeedbackGenerator(style: .soft)
 
     init(key: Binding<Character?>) {
         self._key = key
@@ -25,6 +26,7 @@ struct GameKeyboard: View {
                     Spacer(minLength: 0)
                     ForEach(letters, id: \.self) { letter in
                         Button(String(letter)) {
+                            generator.impactOccurred()
                             key = letter
                         }
                         .buttonStyle(KeyboardKey(letter.isLetter ? .primary(size: .title2, emphasis: .medium) : .headline))

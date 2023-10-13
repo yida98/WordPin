@@ -9,6 +9,7 @@ import SwiftUI
 
 struct GameTab: View {
     @ObservedObject var viewModel: ContentViewModel
+    private let softGenerator = UIImpactFeedbackGenerator(style: .soft)
 
     var body: some View {
         VStack {
@@ -16,6 +17,7 @@ struct GameTab: View {
                 HStack {
                     Spacer()
                     Button {
+                        softGenerator.impactOccurred()
                         viewModel.restartGame()
                     } label: {
                         HStack {
@@ -47,6 +49,7 @@ struct GameTab: View {
                         .frame(height: 100)
                     } else {
                         Button {
+                            softGenerator.impactOccurred()
                             viewModel.attachGameSession()
                         } label: {
                             VStack(spacing: 10) {

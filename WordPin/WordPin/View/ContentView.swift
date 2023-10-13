@@ -22,6 +22,8 @@ struct ContentView: View {
     @State private var currentSize: CGSize = .zero
     @State private var tabsShowing: Bool = false
 
+    private let lightGenerator = UIImpactFeedbackGenerator(style: .light)
+
     init() {
         UIPageControl.appearance().currentPageIndicatorTintColor = UIColor(Color.jade)
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.2)
@@ -66,6 +68,7 @@ struct ContentView: View {
             HStack {
                 Spacer(minLength: 0)
                 Button {
+                    lightGenerator.impactOccurred()
                     selection = 0
                 } label: {
                     Image(systemName: "gamecontroller")
@@ -74,6 +77,7 @@ struct ContentView: View {
                 .background(floatingBackground(0))
                 Spacer(minLength: 0)
                 Button {
+                    lightGenerator.impactOccurred()
                     selection = 1
                 } label: {
                     Image(systemName: "globe.americas.fill")
@@ -82,6 +86,7 @@ struct ContentView: View {
                 .background(floatingBackground(1))
                 Spacer(minLength: 0)
                 Button {
+                    lightGenerator.impactOccurred()
                     selection = 2
                 } label: {
                     Image(systemName: "person.text.rectangle")
